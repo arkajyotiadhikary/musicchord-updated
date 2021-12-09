@@ -7,8 +7,8 @@ const mongoose = require("mongoose");
 const cors = require("cors");
 
 // Import routes
-const authRoutes = require("./Router/Auth");
-const musicRoutes = require("./Router/Music");
+const authRoutes = require("./router/Auth");
+const musicRoutes = require("./router/Music");
 
 // initialization
 dotenv.config();

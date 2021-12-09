@@ -1,7 +1,7 @@
 const { v4: uuidv4 } = require("uuid");
 const jwt = require("jsonwebtoken");
-const User = require("../Models/SignUpModel");
-const { encrypt, decrypt } = require("../Utils/encrypt");
+const User = require("../models/SignUpModel");
+const { encrypt, decrypt } = require("../utils/encrypt");
 
 // Sign In route
 // /auth/signin
