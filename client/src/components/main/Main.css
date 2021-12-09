@@ -1,0 +1,12 @@
+*,
+*::after,
+*::before {
+}
+
+.MainContainer {
+    display: grid;
+    padding: 1rem 0;
+    grid-template-columns: repeat(3, 1fr);
+    justify-content: center;
+    grid-gap: 0.5rem;
+}

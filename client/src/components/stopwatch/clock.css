@@ -1,0 +1,32 @@
+@import url("https://fonts.googleapis.com/css?family=Roboto+Mono:300&display=swap");
+
+.rotate {
+    animation: rotate 60s linear infinite;
+}
+
+.small-rotate {
+    animation: rotate 60s linear infinite;
+    animation-duration: 1s;
+}
+@keyframes rotate {
+    to {
+        transform: rotate(1turn);
+    }
+}
+
+.mark {
+    animation: mark 0.75s 7.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) both;
+}
+@keyframes mark {
+    0% {
+        opacity: 0;
+    }
+    30%,
+    50% {
+        opacity: 1;
+    }
+    100% {
+        opacity: 0;
+        transform: translateY(2px);
+    }
+}
