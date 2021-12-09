@@ -1,5 +1,5 @@
 const router = require("express").Router();
-const { yt_audio } = require("../Controllers/Music");
+const { yt_audio } = require("../controllers/Music");
 
 router.route("/:songId").get(yt_audio);
 
