@@ -5,6 +5,7 @@ const http = require("http");
 const dotenv = require("dotenv");
 const mongoose = require("mongoose");
 const cors = require("cors");
+const path = require("path");
 
 // Import routes
 const authRoutes = require("./router/Auth");
