@@ -1,6 +1,8 @@
 //Import
 import React, { useState, useEffect, useRef } from "react";
+import { useSelector } from "react-redux";
 
+import message_data from "./message_data";
 import Message from "./Message";
 import InputPanel from "./InputPanel";
 import UserJoinMessage from "./UserJoinMessage";
@@ -10,6 +12,8 @@ import SocketClient from "../socket/SocketClient";
 // ---
 
 const Chat = () => {
+    const this_username = useSelector((state) => state.user.username);
+
     //States
     const [messages, setMessages] = useState([]);
     const [userList, setUserList] = useState([]);
@@ -37,54 +41,39 @@ const Chat = () => {
 
     // FIXME user join. not sync with each users
     const handleUserActivity = (serverMsgType) => {
-        const newObj = {
-            type: "server",
-            message: serverMsgType,
-            data: {
-                username: "abc",
-                profilePic: "",
-            },
-        };
+        const newObj = {};
 
         setMessages((msg) => [...msg, newObj]);
     };
 
     // user message handler
-    const handleUserMessages = (message, user, time) => {
+    const handleUserMessages = (message, time) => {
         SocketClient.emit("message", {
-            message: message,
-            user: user,
-            time: time,
+            message,
+            time,
         });
 
-        const newObj = {
-            type: "clientMsg",
+        const messageData = message_data(
+            "selfMessage",
             message,
-            _data: {
-                username: user,
-                profilePic: "",
-                user,
-                time,
-            },
-        };
+            this_username,
+            "",
+            time
+        );
 
-        setMessages((messages) => [...messages, newObj]);
+        setMessages((messages) => [...messages, messageData]);
         handleScroll();
     };
 
     const handleClientMessage = (data) => {
-        console.log("client data", data);
-        const newObj = {
-            type: "selfMsg",
-            message: data.message,
-            _data: {
-                username: data.user,
-                profilePic: "",
-                time: data.time,
-            },
-        };
-
-        setMessages((messages) => [...messages, newObj]);
+        const messageData = message_data(
+            "clientMessage",
+            data.message,
+            data.user,
+            "",
+            data.time
+        );
+        setMessages((messages) => [...messages, messageData]);
     };
 
     const handleScroll = () => {

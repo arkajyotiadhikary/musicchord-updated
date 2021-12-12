@@ -3,6 +3,7 @@ import { faPaperPlane } from "@fortawesome/free-solid-svg-icons";
 import { useRef, useEffect, useState } from "react";
 
 const InputPanel = (prop) => {
+    const time = new Date();
     const inputField = useRef(null);
     const { handleUserMessages } = prop;
 
@@ -16,7 +17,14 @@ const InputPanel = (prop) => {
         e.preventDefault();
 
         if (input.length) {
-            handleUserMessages(input, localStorage.getItem("username"));
+            handleUserMessages(
+                input,
+                time.toLocaleString("en-US", {
+                    hour: "numeric",
+                    minute: "numeric",
+                    hour12: true,
+                })
+            );
             setInput("");
         }
     };

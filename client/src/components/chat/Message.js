@@ -1,8 +1,14 @@
-const Message = ({ chatData }) => {
-    const { type, message, _data } = chatData;
-
+const Message = (props) => {
+    const username = props.chatData._data.username;
+    const message = props.chatData.message;
+    const message_time = props.chatData._data.time;
+    const message_type = props.chatData.type;
     return (
-        <div className={type === "selfMsg" ? "answer left" : "answer right"}>
+        <div
+            className={
+                message_type === "selfMessage" ? "answer right" : "answer left"
+            }
+        >
             <div className="avatar">
                 <img
                     src="https://bootdey.com/img/Content/avatar/avatar1.png"
@@ -10,9 +16,9 @@ const Message = ({ chatData }) => {
                 />
                 <div className="status offline"></div>
             </div>
-            <div className="name">{_data.username}</div>
+            <div className="name">{username}</div>
             <div className="text">{message}</div>
-            {/* <div className="time">5 min ago</div> */}
+            <div className="time">{message_time}</div>
         </div>
     );
 };
