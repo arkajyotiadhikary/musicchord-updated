@@ -41,9 +41,14 @@ const Chat = () => {
 
     // FIXME user join. not sync with each users
     const handleUserActivity = (serverMsgType) => {
-        const newObj = {};
-
-        setMessages((msg) => [...msg, newObj]);
+        const messageData = message_data(
+            "serverMessage",
+            "New User Joined",
+            "server",
+            "",
+            ""
+        );
+        setMessages((msg) => [...msg, messageData]);
     };
 
     // user message handler
