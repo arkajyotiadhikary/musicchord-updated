@@ -27,7 +27,9 @@ const Chat = () => {
             handleUserActivity("New user has joined");
         });
 
-        SocketClient.on("client-message", (data) => handleClientMessage(data));
+        SocketClient.on("client-message", (data, username) =>
+            handleClientMessage(data, username)
+        );
         SocketClient.on("disconnection", (data) => {
             setUserList([...data]);
             handleUserActivity("User left");
@@ -61,7 +63,7 @@ const Chat = () => {
         const messageData = message_data(
             "selfMessage",
             message,
-            this_username,
+            localStorage.getItem("username"),
             "",
             time
         );
@@ -70,11 +72,11 @@ const Chat = () => {
         handleScroll();
     };
 
-    const handleClientMessage = (data) => {
+    const handleClientMessage = (data, username) => {
         const messageData = message_data(
             "clientMessage",
             data.message,
-            data.user,
+            username,
             "",
             data.time
         );

@@ -53,7 +53,7 @@ io.on("connection", (socket) => {
     io.emit("connection", userList);
 
     socket.on("message", (data) => {
-        socket.broadcast.emit("client-message", data);
+        socket.broadcast.emit("client-message", data, userName);
     });
     socket.on("disconnect", () => {
         removeClientFromMap(socket.id);
