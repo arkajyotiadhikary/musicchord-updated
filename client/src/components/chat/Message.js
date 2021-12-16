@@ -27,7 +27,7 @@ const Message = (props) => {
     else {
         return (
             <div className="answer text-center my-3">
-                <div className="text">New user has joined</div>
+                <div className="text">{message}</div>
             </div>
         );
     }
