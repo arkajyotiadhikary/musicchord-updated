@@ -10,7 +10,7 @@ const songDetail = {
     artist: "",
 };
 
-const search_song = async (songName) => {
+const search_song = async (songName = "study music") => {
     const url = yt_search + songName;
     try {
         const yt_details = await axios.get(url);

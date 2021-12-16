@@ -5,7 +5,7 @@ const SessionLenght = (props) => {
 
     useEffect(() => {
         props.setTime(sessionLenght);
-    }, [sessionLenght]);
+    }, [props, sessionLenght]);
 
     return (
         <div className="col-md-6">

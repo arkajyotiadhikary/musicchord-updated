@@ -2,7 +2,6 @@ import axios from "axios";
 
 const endpoint = "http://localhost:8000";
 
-// FIXME
 const signUp = async (formData, history) => {
     const config = {
         headers: {
@@ -11,11 +10,7 @@ const signUp = async (formData, history) => {
     };
 
     try {
-        const registeredUser = await axios.post(
-            `${endpoint}/auth/signup`,
-            formData,
-            config
-        );
+        await axios.post(`${endpoint}/auth/signup`, formData, config);
         history.push("/signin");
     } catch (error) {
         console.log("Error", error.response);
@@ -26,7 +21,6 @@ const signUp = async (formData, history) => {
     }
 };
 
-// FIXME
 const signIn = async (formData, history) => {
     const config = {
         headers: {
@@ -55,7 +49,6 @@ const signIn = async (formData, history) => {
     }
 };
 
-// FIXME Cross-Origin Prob
 const loadUser = async () => {
     const token = localStorage.getItem("token");
 
@@ -79,7 +72,6 @@ const loadUser = async () => {
         return signInDetails;
     } catch (error) {
         console.log("Error", error.response);
-        // TODO wrong in err
         const err = error.response;
         if (err.status === 400) {
             console.log("Error Message", err.data.msg);
@@ -88,45 +80,5 @@ const loadUser = async () => {
         return false;
     }
 };
-
-// const setSession = async (type) => {
-//     const token = localStorage.getItem("token");
-
-//     const config = {
-//         headers: {
-//             "Content-Type": "application/json",
-//         },
-//     };
-
-//     const body = {
-//         token,
-//         type,
-//         sessionID: sessionStorage.sessionID,
-//     };
-
-//     try {
-//         const cookieDetails = await axios.post(
-//             `${endpoint}/auth/session`,
-//             body,
-//             config
-//         );
-//         const { sessionID, chatRoom } = cookieDetails.data.data;
-
-//         //NOTE Storing in session storage (for each tab session storage is unique)
-//         sessionStorage.sessionID = sessionID;
-
-//         //NOTE Store the chat room arr in local storage
-//         localStorage.setItem("chatRoom", JSON.stringify(chatRoom));
-//     } catch (error) {
-//         console.log(error.response);
-//         // TODO wrong in err
-//         const err = error.response;
-//         if (err.status === 400) {
-//             console.log(err.data.msg);
-//         }
-//         console.log(error);
-//         return false;
-//     }
-// };
 
 export { signUp, signIn, loadUser };

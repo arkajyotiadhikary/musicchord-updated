@@ -29,36 +29,36 @@ const io = socketIO(server, {
 });
 
 // Socket io connection
+const nsp = io.of("http://localhost:3000/main");
 const userSocketIdMap = new Map();
-let userList = [];
 
-// add new user to the user list
-const addClientToMap = (userName, socketId) => {
-    if (!userSocketIdMap.has(socketId)) {
-        userSocketIdMap.set(socketId, userName);
+const addClientToMap = (socket) => {
+    let userName = socket.handshake.query.userName;
+    if (!userSocketIdMap.has(socket.id)) {
+        userSocketIdMap.set(socket.id, userName);
     }
 };
-
-// remove user from the user list
 const removeClientFromMap = (socketID) => {
-    if (userSocketIdMap.has(socketID)) {
-        userSocketIdMap.delete(socketID);
-    }
+    if (userSocketIdMap.has(socketID)) userSocketIdMap.delete(socketID);
+};
+
+const updatedUserList = () => {
+    return [...userSocketIdMap.values()];
 };
 
 io.on("connection", (socket) => {
-    let userName = socket.handshake.query.userName;
-    addClientToMap(userName, socket.id);
-    userList = [...userSocketIdMap.values()];
-    io.emit("connection", userList);
-
+    addClientToMap(socket);
+    io.emit("connection", updatedUserList());
     socket.on("message", (data) => {
-        socket.broadcast.emit("client-message", data);
+        socket.broadcast.emit(
+            "client-message",
+            data,
+            socket.handshake.query.userName
+        );
     });
     socket.on("disconnect", () => {
         removeClientFromMap(socket.id);
-        console.log("User List ", userSocketIdMap);
-        io.emit("disconnection", userList);
+        io.emit("disconnection", updatedUserList());
     });
 });
 

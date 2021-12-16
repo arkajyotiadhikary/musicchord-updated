@@ -1,5 +1,5 @@
 const UserJoinMessage = ({ chatData }) => {
-    const { message, data } = chatData;
+    const { message } = chatData;
 
     return (
         <div className="userjoinmsg">

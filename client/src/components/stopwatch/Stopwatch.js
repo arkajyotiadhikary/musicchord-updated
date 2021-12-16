@@ -12,7 +12,7 @@ const StopwatchApp = () => {
         seconds: 0,
     });
     const [sessions, setSessions] = useState(0);
-    const [timer, setTimer] = useState(0);
+    const [timer] = useState(0);
     const [min, setMin] = useState(0);
     const [timeSec, setTimeSec] = useState(0);
 
@@ -65,7 +65,7 @@ const StopwatchApp = () => {
             sessions !== 0 ? setSessions(sessions - 1) : setSessions(0);
             clearInterval(countRef.current);
         }
-    }, [timeSec]);
+    }, [min, sessions, timeSec, times]);
 
     return (
         <div className="card border-0 ps-2 pomodoro">

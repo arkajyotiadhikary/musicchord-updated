@@ -51,6 +51,7 @@ const Player = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+        console.log("music requested");
         const _songDetail = await search_song(inputSong);
         console.log(_songDetail);
         setsongDetail((prevState) => ({
