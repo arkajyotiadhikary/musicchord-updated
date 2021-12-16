@@ -32,16 +32,19 @@ const Chat = () => {
         };
         SocketClient.on("connection", (data) => {
             setUserList([...data]);
+            console.log("user-join list", userList);
             getUserDetails();
             handleUserActivity("New user has joined");
         });
+    }, [userDetails, userList]);
 
+    useEffect(() => {
         SocketClient.on("disconnection", (data) => {
             setUserList([...data]);
+            console.log("user-left list", userList);
             handleUserActivity("User left");
         });
-        console.log(userList);
-    }, [userDetails, userList]);
+    }, [userList]);
 
     useEffect(() => {
         const handleClientMessage = (data, username) => {
@@ -63,11 +66,10 @@ const Chat = () => {
     }, []);
     //Handlers
 
-    // FIXME user join. not sync with each users
-    const handleUserActivity = () => {
+    const handleUserActivity = (message) => {
         const messageData = message_data(
             "serverMessage",
-            "New User Joined",
+            message,
             "server",
             "",
             ""
@@ -75,7 +77,6 @@ const Chat = () => {
         setMessages((msg) => [...msg, messageData]);
     };
 
-    // user message handler
     const handleUserMessages = (message, time) => {
         SocketClient.emit("message", {
             message,

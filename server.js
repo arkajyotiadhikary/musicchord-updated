@@ -41,25 +41,22 @@ const addClientToMap = (userName, socketId) => {
 };
 
 // remove user from the user list
-const removeClientFromMap = (socketID) => {
-    if (userSocketIdMap.has(socketID)) {
-        userSocketIdMap.delete(socketID);
-    }
-};
+const removeClientFromMap = (socketID) => {};
 
 io.on("connection", (socket) => {
     let userName = socket.handshake.query.userName;
     addClientToMap(userName, socket.id);
     userList = [...userSocketIdMap.values()];
     io.emit("connection", userList);
-
     socket.on("message", (data) => {
         socket.broadcast.emit("client-message", data, userName);
     });
     socket.on("disconnect", () => {
-        removeClientFromMap(socket.id);
-        console.log("User List ", userSocketIdMap);
-        io.emit("disconnection", userList);
+        if (userSocketIdMap.has(socket.id)) {
+            userSocketIdMap.delete(socket.id);
+            userList = [...userSocketIdMap.values()];
+            io.emit("disconnection", userList);
+        }
     });
 });
 
