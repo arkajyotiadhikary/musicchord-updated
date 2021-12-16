@@ -24,7 +24,7 @@ const Signup = () => {
             }
         };
         getUserDetails();
-    }, []);
+    }, [history]);
 
     const handleChange = (e) => {
         setFormData({

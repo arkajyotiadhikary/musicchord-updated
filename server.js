@@ -29,6 +29,7 @@ const io = socketIO(server, {
 });
 
 // Socket io connection
+const nsp = io.of("/main");
 const userSocketIdMap = new Map();
 let userList = [];
 

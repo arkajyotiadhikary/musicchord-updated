@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import { useHistory } from "react-router-dom";
 import { loadUser } from "../../apis/auth";
 import { signIn } from "../../apis/auth";
-import PrivateRoute from "../../router/PrivateRouter";
 
 const Signin = () => {
     const history = useHistory();
@@ -21,7 +20,7 @@ const Signin = () => {
             }
         };
         getUserDetails();
-    }, []);
+    }, [history]);
 
     const handleChange = (e) => {
         setFormData({

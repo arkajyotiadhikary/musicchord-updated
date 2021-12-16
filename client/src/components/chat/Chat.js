@@ -1,7 +1,5 @@
 //Import
 import React, { useState, useEffect, useRef } from "react";
-import { useSelector } from "react-redux";
-
 import message_data from "./message_data";
 import Message from "./Message";
 import InputPanel from "./InputPanel";
@@ -12,8 +10,6 @@ import SocketClient from "../socket/SocketClient";
 // ---
 
 const Chat = () => {
-    const this_username = useSelector((state) => state.user.username);
-
     //States
     const [messages, setMessages] = useState([]);
     const [userList, setUserList] = useState([]);
@@ -34,7 +30,8 @@ const Chat = () => {
             setUserList([...data]);
             handleUserActivity("User left");
         });
-    }, []);
+        console.log(userList);
+    }, [userList, messages]);
 
     useEffect(() => {
         handleScroll();
@@ -42,7 +39,7 @@ const Chat = () => {
     //Handlers
 
     // FIXME user join. not sync with each users
-    const handleUserActivity = (serverMsgType) => {
+    const handleUserActivity = () => {
         const messageData = message_data(
             "serverMessage",
             "New User Joined",
@@ -98,7 +95,7 @@ const Chat = () => {
                     <div className="card border-0 online-users bg-light">
                         <div className="card-body p-4">
                             <div className="chat-users text-center">
-                                {userList?.map((user) => (
+                                {userList.map((user) => (
                                     <User user={user} />
                                 ))}
                             </div>

@@ -10,7 +10,6 @@ const Api = {
 };
 
 const WeatherApp = () => {
-    const [weather, setWeather] = useState({});
     const [temp, setTemp] = useState(0);
     const [wind, setWind] = useState(0);
     const [humidity, setHumidity] = useState(0);
@@ -29,7 +28,6 @@ const WeatherApp = () => {
             try {
                 const response = await axios.get(Api.base + Api.key);
                 const clouds = response.data.clouds.all;
-                setWeather(response.data);
                 setTemp(response.data.main.temp - 273.15);
                 setWind(response.data.wind.speed);
                 setHumidity(response.data.main.humidity);

@@ -1,6 +1,6 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPaperPlane } from "@fortawesome/free-solid-svg-icons";
-import { useRef, useEffect, useState } from "react";
+import { useRef, useState } from "react";
 
 const InputPanel = (prop) => {
     const time = new Date();

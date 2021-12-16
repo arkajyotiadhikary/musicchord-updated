@@ -27,7 +27,7 @@ const AppRouter = () => {
             }
         };
         getUserDetails();
-    }, []);
+    }, [userDetails]);
 
     return (
         <Switch>
