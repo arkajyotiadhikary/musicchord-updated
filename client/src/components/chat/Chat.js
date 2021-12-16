@@ -30,26 +30,37 @@ const Chat = () => {
                 });
             }
         };
-
         SocketClient.on("connection", (data) => {
-            getUserDetails();
             setUserList([...data]);
+            getUserDetails();
             handleUserActivity("New user has joined");
         });
 
-        SocketClient.on("client-message", (data, username) =>
-            handleClientMessage(data, username)
-        );
         SocketClient.on("disconnection", (data) => {
             setUserList([...data]);
             handleUserActivity("User left");
         });
         console.log(userList);
-    }, [userList, messages, userDetails]);
+    }, [userDetails, userList]);
 
     useEffect(() => {
-        handleScroll();
-    }, [messages]);
+        const handleClientMessage = (data, username) => {
+            const messageData = message_data(
+                "clientMessage",
+                data.message,
+                username,
+                "",
+                data.time
+            );
+            setMessages((messages) => [...messages, messageData]);
+            handleScroll();
+        };
+
+        SocketClient.on("client-message", (data, username) => {
+            handleClientMessage(data, username);
+            console.log("Client message recived");
+        });
+    }, []);
     //Handlers
 
     // FIXME user join. not sync with each users
@@ -81,17 +92,6 @@ const Chat = () => {
 
         setMessages((messages) => [...messages, messageData]);
         handleScroll();
-    };
-
-    const handleClientMessage = (data, username) => {
-        const messageData = message_data(
-            "clientMessage",
-            data.message,
-            username,
-            "",
-            data.time
-        );
-        setMessages((messages) => [...messages, messageData]);
     };
 
     const handleScroll = () => {
