@@ -11,24 +11,8 @@ import ProfileCard from "../components/navbar/ProfileCard";
 import LandingPage from "../components/landing-page/LandingPage";
 
 // Import functions
-import { loadUser } from "../apis/auth";
 
 const AppRouter = () => {
-    const [userDetails, setUserDetails] = useState({ userDetails: {} });
-
-    useEffect(() => {
-        const getUserDetails = async () => {
-            const loadedUser = await loadUser();
-            if (loadedUser) {
-                setUserDetails({
-                    ...userDetails,
-                    userDetails: loadedUser.data.data,
-                });
-            }
-        };
-        getUserDetails();
-    }, [userDetails]);
-
     return (
         <Switch>
             <Route path="/signin" component={Signin} />

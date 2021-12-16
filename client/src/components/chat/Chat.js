@@ -7,6 +7,7 @@ import UserJoinMessage from "./UserJoinMessage";
 import User from "./User";
 import "./Chat.css";
 import SocketClient from "../socket/SocketClient";
+import { loadUser } from "../../apis/auth";
 // ---
 
 const Chat = () => {
@@ -17,8 +18,21 @@ const Chat = () => {
     const messageListDiv = useRef(null);
 
     //useEffect Hooks
+    const [userDetails, setUserDetails] = useState({ userDetails: {} });
+
     useEffect(() => {
+        const getUserDetails = async () => {
+            const loadedUser = await loadUser();
+            if (loadedUser) {
+                setUserDetails({
+                    ...userDetails,
+                    userDetails: loadedUser.data.data,
+                });
+            }
+        };
+
         SocketClient.on("connection", (data) => {
+            getUserDetails();
             setUserList([...data]);
             handleUserActivity("New user has joined");
         });
@@ -31,7 +45,7 @@ const Chat = () => {
             handleUserActivity("User left");
         });
         console.log(userList);
-    }, [userList, messages]);
+    }, [userList, messages, userDetails]);
 
     useEffect(() => {
         handleScroll();
