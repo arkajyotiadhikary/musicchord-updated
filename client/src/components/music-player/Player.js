@@ -22,7 +22,7 @@ const Player = () => {
     const [isLoop, setIsLoop] = useState(false);
 
     useEffect(() => {
-        updateSong(`http://localhost:8000/music/${songDetail.songId}`);
+        updateSong(`/music/${songDetail.songId}`);
     }, [songDetail.songId]);
 
     const handleChange = () => {

@@ -31,7 +31,6 @@ const io = socketIO(server);
 // });
 
 // Socket io connection
-const nsp = io.of("http://localhost:3000/main");
 const userSocketIdMap = new Map();
 
 const addClientToMap = (socket) => {
