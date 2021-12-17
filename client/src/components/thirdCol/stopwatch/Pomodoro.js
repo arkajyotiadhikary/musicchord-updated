@@ -4,8 +4,8 @@ import Timer from "./Timer";
 const Pomodoro = () => {
     return (
         <div className="pomodoro py-5">
-            <Buttons></Buttons>
-            <Timer></Timer>
+            <Buttons />
+            <Timer />
         </div>
     );
 };
