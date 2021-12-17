@@ -1,11 +1,18 @@
+import React, { useState } from "react";
 import "./pomodoro.css";
 import Buttons from "./Buttons";
 import Timer from "./Timer";
+
 const Pomodoro = () => {
+    const [timerWindow, setTimerWindow] = useState("");
+
+    const handleWindow = (value) => {
+        setTimerWindow(value);
+    };
     return (
         <div className="pomodoro py-5">
-            <Buttons />
-            <Timer />
+            <Buttons handleWindow={handleWindow} />
+            <Timer timerWindow={timerWindow} />
         </div>
     );
 };
