@@ -1,11 +1,11 @@
 import WeatherApp from "../weather/WeatherApp";
-// import StopwatchApp from "../stopwatch/Stopwatch";
+import Pomodoro from "./stopwatch/Pomodoro";
 
 const ThirdCol = () => {
     return (
         <div className="d-flex flex-column justify-content-between align-items-between">
             <WeatherApp />
-            {/* <StopwatchApp /> */}
+            <Pomodoro />
         </div>
     );
 };

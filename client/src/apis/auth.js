@@ -1,7 +1,5 @@
 import axios from "axios";
 
-const endpoint = "http://localhost:8000";
-
 const signUp = async (formData, history) => {
     const config = {
         headers: {
@@ -10,7 +8,7 @@ const signUp = async (formData, history) => {
     };
 
     try {
-        await axios.post(`${endpoint}/auth/signup`, formData, config);
+        await axios.post(`/auth/signup`, formData, config);
         history.push("/signin");
     } catch (error) {
         console.log("Error", error.response);
@@ -30,7 +28,7 @@ const signIn = async (formData, history) => {
 
     try {
         const signInDetails = await axios.post(
-            `${endpoint}/auth/signin`,
+            `/auth/signin`,
             formData,
             config
         );
@@ -62,11 +60,7 @@ const loadUser = async () => {
     };
 
     try {
-        const signInDetails = await axios.post(
-            `${endpoint}/auth/loaduser`,
-            body,
-            config
-        );
+        const signInDetails = await axios.post(`/auth/loaduser`, body, config);
         console.log("Load User Details", signInDetails);
 
         return signInDetails;

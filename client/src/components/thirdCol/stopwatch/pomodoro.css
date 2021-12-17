@@ -1,0 +1,7 @@
+.pomodoro-timer {
+    height: 10rem;
+}
+
+.pomodoro-timer .time {
+    font-size: 5rem;
+}

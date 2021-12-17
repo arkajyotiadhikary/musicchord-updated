@@ -19,14 +19,16 @@ mongoose.connect(process.env.DATABASE_URI, () => {
 
 const app = express();
 const server = http.createServer(app);
-const io = socketIO(server, {
-    cors: {
-        origin: "localhost:3000",
-        methods: ["GET", "POST"],
-        allowedHeaders: ["my-custom-header"],
-        credentials: true,
-    },
-});
+const io = socketIO(server);
+
+// const io = socketIO(server, {
+//     cors: {
+//         origin: "localhost:3000",
+//         methods: ["GET", "POST"],
+//         allowedHeaders: ["my-custom-header"],
+//         credentials: true,
+//     },
+// });
 
 // Socket io connection
 const nsp = io.of("http://localhost:3000/main");
