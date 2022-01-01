@@ -1,6 +1,5 @@
 // TODO
-// - On time window change the start button should be change to start again
-// - The timers are not running for Break and Long Break
+//  times not updating from the redux
 
 import React, { useState, useEffect, useRef } from "react";
 import { useSelector } from "react-redux";

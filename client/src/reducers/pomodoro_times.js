@@ -12,9 +12,9 @@ export const pomodoro_times = (state = iniState, action) => {
         case POMODORO_SET_TIME: {
             return {
                 ...state,
-                pomodoro: payload.pomodoroTime,
-                break: payload.breakTime,
-                long_break: payload.long_breakTime,
+                pomodoro_time: payload.pomodoro_time,
+                break_time: payload.break_time,
+                long_break_time: payload.long_break_time,
             };
         }
         default:

@@ -4,23 +4,27 @@ import pomodoro_times from "../../../actions/pomodoro_times";
 
 const TimerSetting = () => {
     const times = useSelector((state) => state.pomodoro_times);
-    const { pomodoro_time, break_time, long_break_time } = times;
     const dispatch = useDispatch();
     const [timeState, setTimeState] = useState({
-        pomodoroTime: 0,
-        breakTime: 0,
-        long_breakTime: 0,
+        pomodoro_time: 0,
+        break_time: 0,
+        long_break_time: 0,
     });
 
-    const { pomodoroTime, breakTime, long_breakTime } = times;
     const handleChange = (e) => {
-        setTimeState({ ...times, [e.target.name]: e.target.value });
+        setTimeState({
+            ...timeState,
+            [e.target.name]: parseInt(e.target.value),
+        });
     };
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        dispatch(pomodoro_times(times));
+        dispatch(pomodoro_times(timeState));
     };
+
+    console.log("Time State", timeState);
+    console.log("Tiems", times);
 
     return (
         <div
@@ -62,8 +66,7 @@ const TimerSetting = () => {
                                     <input
                                         id="pomodoro-setting-input-pomodoro"
                                         className="pomodoro-setting-input text-center"
-                                        name="pomodoroTime"
-                                        value={pomodoroTime}
+                                        name="pomodoro_time"
                                         type="number"
                                         onChange={handleChange}
                                     />
@@ -78,8 +81,7 @@ const TimerSetting = () => {
                                     <input
                                         id="pomodoro-setting-input-break"
                                         className="pomodoro-setting-input text-center"
-                                        name="breakTime"
-                                        value={breakTime}
+                                        name="break_time"
                                         type="number"
                                         onChange={handleChange}
                                     />
@@ -94,8 +96,7 @@ const TimerSetting = () => {
                                     <input
                                         id="pomodoro-setting-input-long-break"
                                         className="pomodoro-setting-input text-center"
-                                        name="long_breakTime"
-                                        value={long_breakTime}
+                                        name="long_break_time"
                                         type="number"
                                         onChange={handleChange}
                                     />
