@@ -5,11 +5,6 @@ import Timer from "./Timer";
 
 const Pomodoro = () => {
     const [timerWindow, setTimerWindow] = useState("Pomodoro");
-    const [times, setTimes] = useState({
-        pomodoro: 25,
-        break: 5,
-        long_break: 15,
-    });
 
     const [startTimer, setStartTimer] = useState(false);
 
@@ -21,7 +16,6 @@ const Pomodoro = () => {
             <Buttons handleWindow={handleWindow} />
             <Timer
                 timerWindow={timerWindow}
-                times={times}
                 startTimer={startTimer}
                 setStartTimer={setStartTimer}
             />

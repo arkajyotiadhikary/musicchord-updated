@@ -64,17 +64,6 @@ const Chat = () => {
     }, []);
     //Handlers
 
-    const handleUserActivity = (message) => {
-        const messageData = message_data(
-            "serverMessage",
-            message,
-            "server",
-            "",
-            ""
-        );
-        setMessages((msg) => [...msg, messageData]);
-    };
-
     const handleUserMessages = (message, time) => {
         SocketClient.emit("message", {
             message,
