@@ -1,14 +1,16 @@
+// TODO
+// You can not pick number above 60 in time settings
+
 import React, { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import pomodoro_times from "../../../actions/pomodoro_times";
 
 const TimerSetting = () => {
-    const times = useSelector((state) => state.pomodoro_times);
     const dispatch = useDispatch();
     const [timeState, setTimeState] = useState({
-        pomodoro_time: 0,
-        break_time: 0,
-        long_break_time: 0,
+        pomodoro_time: 25,
+        break_time: 5,
+        long_break_time: 15,
     });
 
     const handleChange = (e) => {
@@ -23,8 +25,7 @@ const TimerSetting = () => {
         dispatch(pomodoro_times(timeState));
     };
 
-    console.log("Time State", timeState);
-    console.log("Tiems", times);
+    const { pomodoro_time, break_time, long_break_time } = timeState;
 
     return (
         <div
@@ -67,6 +68,7 @@ const TimerSetting = () => {
                                         id="pomodoro-setting-input-pomodoro"
                                         className="pomodoro-setting-input text-center"
                                         name="pomodoro_time"
+                                        value={pomodoro_time}
                                         type="number"
                                         onChange={handleChange}
                                     />
@@ -82,6 +84,7 @@ const TimerSetting = () => {
                                         id="pomodoro-setting-input-break"
                                         className="pomodoro-setting-input text-center"
                                         name="break_time"
+                                        value={break_time}
                                         type="number"
                                         onChange={handleChange}
                                     />
@@ -97,6 +100,7 @@ const TimerSetting = () => {
                                         id="pomodoro-setting-input-long-break"
                                         className="pomodoro-setting-input text-center"
                                         name="long_break_time"
+                                        value={long_break_time}
                                         type="number"
                                         onChange={handleChange}
                                     />

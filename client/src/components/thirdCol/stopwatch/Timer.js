@@ -1,5 +1,5 @@
 // TODO
-//  times not updating from the redux
+// Timer reset
 
 import React, { useState, useEffect, useRef } from "react";
 import { useSelector } from "react-redux";
@@ -13,32 +13,21 @@ const Timer = (props) => {
     const [play, setPlay] = useState(false);
     const [sec, setSec] = useState(0);
     const [min, setMin] = useState(0);
-
+    const [reset, setReset] = useState(false);
     const startRef = useRef(null);
-
-    const handleClick = () => {
-        if (!play) {
-            setPlay(true);
-            clearInterval(startRef.current);
-            startRef.current = setInterval(decrementSec, 1000);
-        } else {
-            setPlay(false);
-            clearInterval(startRef.current);
-        }
-    };
 
     const decrementSec = () => {
         setTimeSec((timeSec) => timeSec - 1);
     };
 
-    // SECTION USE-EFFECT
-
     useEffect(() => {
-        setPlay(false);
         if (timerWindow === "Pomodoro") setpomodoroMin(times.pomodoro_time);
         else if (timerWindow === "Break") setpomodoroMin(times.break_time);
         else setpomodoroMin(times.long_break_time);
-    }, [pomodoroMin, timerWindow, times]);
+        setPlay(false);
+    }, [pomodoroMin, timerWindow, times, reset]);
+
+    // SECTION USE-EFFECT
 
     useEffect(() => {
         setPlay(false);
@@ -58,17 +47,43 @@ const Timer = (props) => {
 
     // !SECTION
 
+    const handleClick = (e) => {
+        if (e.target.value === "start_stop") {
+            if (!play) {
+                setPlay(true);
+                clearInterval(startRef.current);
+                startRef.current = setInterval(decrementSec, 1000);
+            } else {
+                setPlay(false);
+                clearInterval(startRef.current);
+            }
+        } else if (e.target.value === "reset") {
+            console.log("Reset");
+            setPlay(false);
+            setReset(true);
+            clearInterval(startRef.current);
+        }
+    };
+
     return (
         <div className="pomodoro-timer ">
             <div className="time text-center">
-                {min > 10 ? min : `0${min}`}:{sec > 10 ? sec : `0${sec}`}
+                {min >= 10 ? min : `0${min}`}:{sec >= 10 ? sec : `0${sec}`}
             </div>
             <div className="button-stop d-flex justify-content-center text-center w-100">
                 <button
-                    className="pomodoro-stop btn border-dark w-50"
+                    value="start_stop"
+                    className="pomodoro-stop btn border-dark mx-2 w-50"
                     onClick={handleClick}
                 >
                     {play ? "Stop" : "Start"}
+                </button>
+                <button
+                    value="reset"
+                    className="pomodoro-stop btn border-dark mx-2 w-50"
+                    onClick={handleClick}
+                >
+                    Reset
                 </button>
             </div>
         </div>
