@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef } from "react";
 import PlayerDetails from "./PlayerDetails";
 import PlayerController from "./PlayerController";
+import PlayerCard from "./PlayerCard";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSearch } from "@fortawesome/free-solid-svg-icons";
 import { search_song } from "../../apis/music";
@@ -63,7 +64,8 @@ const Player = () => {
         }));
     };
 
-    const handlePlay = () => {
+    const handlePlay = (e) => {
+        e.preventDefault();
         setIsPlaying(!isPlaying);
         if (isPlaying) {
             audioRef.current.pause();
@@ -101,6 +103,7 @@ const Player = () => {
                     <FontAwesomeIcon icon={faSearch} />
                 </button>
             </form>
+            {/* <PlayerCard /> */}
             {/* <div className="playerBackground"></div> */}
             <div className="card border-0 text-center c-player">
                 <div className="card-body">
@@ -117,15 +120,6 @@ const Player = () => {
                         handleLoop={handleLoop}
                         handleVol={handleVol}
                     />
-                    {/* <div>
-                        <input
-                            type="range"
-                            min={0}
-                            max={maxPlayTime}
-                            value={audioRef.current.currentTime}
-                            className="form-range"
-                        ></input>
-                    </div> */}
                 </div>
             </div>
         </>

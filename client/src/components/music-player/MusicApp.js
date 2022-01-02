@@ -35,14 +35,13 @@ const MusicApp = () => {
     }, [currentSongIndex, songs.length]);
 
     return (
-        <div className="d-flex flex-column justify-content-between h-100">
+        <div className="d-flex flex-column h-100">
             <Player
                 currentSongIndex={currentSongIndex}
                 setCurrentSongIndex={setCurrentSongIndex}
                 nextSongIndex={nextSongIndex}
                 songs={songs}
             />
-            <ButtonBar />
         </div>
     );
 };
