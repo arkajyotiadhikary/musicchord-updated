@@ -10,6 +10,7 @@ const path = require("path");
 // Import routes
 const authRoutes = require("./router/Auth");
 const musicRoutes = require("./router/Music");
+const radioRoute = require("./router/Radio");
 
 // initialization
 dotenv.config();
@@ -68,6 +69,7 @@ app.use(cors());
 app.use(express.json());
 app.use("/auth", authRoutes);
 app.use("/music", musicRoutes);
+app.use("/radio", radioRoute);
 
 // NOTE heroku deploy
 if (process.env.NODE_ENV === "production") {

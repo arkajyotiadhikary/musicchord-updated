@@ -88,24 +88,25 @@ const Player = () => {
     };
 
     return (
-        <>
-            <form onSubmit={handleSubmit} className="input-group row">
-                <div className="form-outline col-10 ">
-                    <input
-                        onChange={handleChange}
-                        ref={inputField}
-                        type="search"
-                        id="form1"
-                        className="form-control"
-                    />
-                </div>
-                <button type="submit" className="btn btn-primary ps-1 col-2">
+        <div className="music-player mt-2">
+            <form onSubmit={handleSubmit} className="input-group d-flex">
+                <input
+                    onChange={handleChange}
+                    ref={inputField}
+                    type="search"
+                    id="form1"
+                    className="form-control form-control-sm"
+                />
+                <button
+                    type="submit"
+                    className="btn btn-sm btn-primary mx-2 col-md-2"
+                >
                     <FontAwesomeIcon icon={faSearch} />
                 </button>
             </form>
-            {/* <PlayerCard /> */}
             {/* <div className="playerBackground"></div> */}
-            <div className="card border-0 text-center c-player">
+            {
+              <div className="card border-0 text-center c-player">
                 <div className="card-body">
                     <audio src={source} ref={audioRef} autoPlay />
                     <PlayerDetails
@@ -122,7 +123,8 @@ const Player = () => {
                     />
                 </div>
             </div>
-        </>
+          }
+        </div>
     );
 };
 

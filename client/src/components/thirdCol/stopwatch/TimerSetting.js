@@ -44,7 +44,7 @@ const TimerSetting = () => {
                             </h5>
                             <button
                                 type="button"
-                                className="btn-close"
+                                className="btn btn-sm btn-close"
                                 data-bs-dismiss="modal"
                                 aria-label="Close"
                             ></button>
