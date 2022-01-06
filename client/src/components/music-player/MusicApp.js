@@ -1,6 +1,5 @@
 import Player from "./Player";
-import "./MusicApp.css";
-
+import './MusicApp.scss';
 const MusicApp = () => {
     return (
         <div className="d-flex flex-column h-100">

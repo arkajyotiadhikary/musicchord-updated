@@ -9,7 +9,7 @@ const { encrypt, decrypt } = require("../utils/encrypt");
 
 const signIn = async (req, res) => {
     const { email, password } = req.body;
-
+    console.log("Sign in request recived");
     try {
         const hashedData = await User.findOne({ email });
 
