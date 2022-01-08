@@ -8,6 +8,7 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 
 const PlayerController = (props) => {
+    console.log(props.isPlaying);
     return (
         <>
             <div className="d-flex justify-content-around align-items-center my-5">

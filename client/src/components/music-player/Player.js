@@ -64,10 +64,11 @@ const Player = () => {
 
     const handlePlay = (e) => {
         e.preventDefault();
-        setIsPlaying(!isPlaying);
         if (isPlaying) {
+            setIsPlaying(false);
             audioRef.current.pause();
         } else {
+            setIsPlaying(true);
             audioRef.current.play();
         }
     };
@@ -79,7 +80,9 @@ const Player = () => {
     const updateSong = (source) => {
         setSource(source);
         if (audioRef.current) {
-            setIsPlaying(true);
+            audioRef.current.oncanplay = () => {
+                setIsPlaying(true);
+            };
             audioRef.current.pause();
             audioRef.current.load();
         }
