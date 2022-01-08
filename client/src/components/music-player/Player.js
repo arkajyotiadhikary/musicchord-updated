@@ -1,20 +1,10 @@
-import {
-    useState,
-    useEffect,
-    useRef
-} from "react";
+import { useState, useEffect, useRef } from "react";
 import PlayerDetails from "./PlayerDetails";
 import PlayerController from "./PlayerController";
-import {
-    FontAwesomeIcon
-} from "@fortawesome/react-fontawesome";
-import {
-    faSearch
-} from "@fortawesome/free-solid-svg-icons";
-import {
-    search_song
-} from "../../apis/music";
-
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faSearch } from "@fortawesome/free-solid-svg-icons";
+import { search_song } from "../../apis/music";
+const endpoint = "http://localhost:8000";
 const Player = () => {
     const audioRef = useRef(null);
     const inputField = useRef(null);
@@ -32,7 +22,7 @@ const Player = () => {
     const [isLoop, setIsLoop] = useState(false);
 
     useEffect(() => {
-        updateSong(`/music/${songDetail.songId}`);
+        updateSong(`${endpoint}/music/${songDetail.songId}`);
     }, [songDetail.songId]);
 
     const handleChange = () => {
@@ -47,7 +37,7 @@ const Player = () => {
             } else {
                 audioRef.current.addEventListener(
                     "ended",
-                    function() {
+                    function () {
                         this.currentTime = 0;
                         this.play();
                     },
@@ -61,9 +51,7 @@ const Player = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        console.log("music requested");
         const _songDetail = await search_song(inputSong);
-        console.log(_songDetail);
         setsongDetail((prevState) => ({
             ...prevState,
             songId: _songDetail.songId,
@@ -71,6 +59,7 @@ const Player = () => {
             title: _songDetail.title,
             artist: _songDetail.artist,
         }));
+        console.log(_songDetail.songId);
     };
 
     const handlePlay = (e) => {
@@ -96,82 +85,50 @@ const Player = () => {
         }
     };
 
-    return ( <
-            div className = "music-player mt-2" >
-            <
-            form onSubmit = {
-                handleSubmit
+    return (
+        <div className="music-player mt-2">
+            <form onSubmit={handleSubmit} className="input-group d-flex">
+                <input
+                    onChange={handleChange}
+                    ref={inputField}
+                    type="search"
+                    id="form1"
+                    className="form-control form-control-sm"
+                />
+                <button
+                    type="submit"
+                    className="btn btn-sm btn-primary mx-2 col-md-2"
+                >
+                    <FontAwesomeIcon icon={faSearch} />
+                </button>
+            </form>
+            {/* <div className="playerBackground"></div> */}
+            {
+                <div className="card border-0 text-center c-player">
+                    <div className="card-body">
+                        <audio
+                            id="music"
+                            src={source}
+                            ref={audioRef}
+                            autoPlay
+                        />
+                        <PlayerDetails
+                            img_src={songDetail.thumbnail}
+                            title={songDetail.title}
+                            artist={songDetail.artist}
+                        />
+                        <PlayerController
+                            isPlaying={isPlaying}
+                            handlePlay={handlePlay}
+                            isLoop={isLoop}
+                            handleLoop={handleLoop}
+                            handleVol={handleVol}
+                        />
+                    </div>
+                </div>
             }
-            className = "input-group d-flex" >
-            <
-            input onChange = {
-                handleChange
-            }
-            ref = {
-                inputField
-            }
-            type = "search"
-            id = "form1"
-            className = "form-control form-control-sm" /
-            >
-            <
-            button type = "submit"
-            className = "btn btn-sm btn-primary mx-2 col-md-2" >
-            <
-            FontAwesomeIcon icon = {
-                faSearch
-            }
-            /> < /
-            button > <
-            /form> {
-            /* <div className="playerBackground"></div> */
-        } {
-            <
-            div className = "card border-0 text-center c-player" >
-                <
-                div className = "card-body" >
-                <
-                audio src = {
-                    source
-                }
-            ref = {
-                audioRef
-            }
-            autoPlay / >
-                <
-                PlayerDetails
-            img_src = {
-                songDetail.thumbnail
-            }
-            title = {
-                songDetail.title
-            }
-            artist = {
-                songDetail.artist
-            }
-            /> <
-            PlayerController
-            isPlaying = {
-                isPlaying
-            }
-            handlePlay = {
-                handlePlay
-            }
-            isLoop = {
-                isLoop
-            }
-            handleLoop = {
-                handleLoop
-            }
-            handleVol = {
-                handleVol
-            }
-            /> < /
-            div > <
-                /div>
-        } <
-        /div>
-);
+        </div>
+    );
 };
 
 export default Player;

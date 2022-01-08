@@ -20,20 +20,20 @@
 }
 
 .c-player--details > div {
-    height: 69vh;
-    width: fit-content;
+    margin-bottom: 20vh;
 }
 .c-player--details > div > img {
     z-index: 10;
-    display: block;
     width: 70%;
     border-radius: 5%;
     margin: 0px auto;
     max-width: 250px;
+    max-height: 100px;
     box-shadow: rgb(38, 57, 77) 0px 20px 30px -10px;
 }
 
 .c-player--details .detail-title {
+    height: 10vh;
     color: rgb(34, 84, 128);
     text-align: center;
     font-size: 20px;
@@ -44,6 +44,7 @@
 }
 
 .c-player--details .detail-artist {
+    height: 1vh;
     color: rgba(154, 114, 182, 0.802);
     text-align: center;
     font-size: 14px;
@@ -111,52 +112,66 @@
 
 $primary: #e0e0e0;
 
-input[type='range'] {
-  -webkit-appearance: none;
-  -moz-appearance: none;
-  appearance: none;
-  &:focus {
-    outline: none;
-  }
-  &::-webkit-slider-thumb {
+input[type="range"] {
     -webkit-appearance: none;
-  }
-  &::-moz-range-thumb {
-    border: none;
-  }
+    -moz-appearance: none;
+    appearance: none;
+    &:focus {
+        outline: none;
+    }
+    &::-webkit-slider-thumb {
+        -webkit-appearance: none;
+    }
+    &::-moz-range-thumb {
+        border: none;
+    }
 }
 
 .range-style {
-  width: 15rem;
-  height: 2rem;
-  padding: 20px;
+    width: 15rem;
+    height: 2rem;
+    padding: 20px;
 
-  @mixin track-style {
-    display: flex;
-    background-color: #e5e5e5;
-    align-items: center;
-    height: 10px;
-    border-radius: 10px;
-  }
+    @mixin track-style {
+        display: flex;
+        background-color: #e5e5e5;
+        align-items: center;
+        height: 10px;
+        border-radius: 10px;
+    }
 
-  @mixin thumb-style {
-    position: relative;
-    top: -15%;
-    width: 15px;
-    height: 15px;
-    background-color: #14213d;
-    border-radius: 50%;
-  }
-  &::-webkit-slider-runnable-track {
-    @include track-style;
-  }
-  &::-webkit-slider-thumb {
-    @include thumb-style;
-  }
-  &::-moz-range-track {
-    @include track-style;
-  }
-  &::-moz-range-thumb {
-    @include thumb-style;
-  }
+    @mixin thumb-style {
+        position: relative;
+        top: -15%;
+        width: 15px;
+        height: 15px;
+        background-color: #14213d;
+        border-radius: 50%;
+    }
+    &::-webkit-slider-runnable-track {
+        @include track-style;
+    }
+    &::-webkit-slider-thumb {
+        @include thumb-style;
+    }
+    &::-moz-range-track {
+        @include track-style;
+    }
+    &::-moz-range-thumb {
+        @include thumb-style;
+    }
+}
+
+#slider {
+    width: 182px;
+    height: 4px;
+    background: #151518;
+    border-radius: 2px;
+    div {
+        width: 4px;
+        height: 4px;
+        margin-top: 1px;
+        background: #ef6dbc;
+        border-radius: 2px;
+    }
 }

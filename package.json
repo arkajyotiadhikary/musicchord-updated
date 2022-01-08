@@ -34,7 +34,7 @@
         "socket.io-stream": "^0.9.1",
         "throttle": "^1.0.3",
         "uuid": "^8.3.2",
-        "ytdl-core": "^4.9.1"
+        "ytdl-core": "^4.9.2"
     },
     "devDependencies": {
         "concurrently": "^6.2.2"
