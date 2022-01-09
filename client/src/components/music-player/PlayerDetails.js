@@ -12,13 +12,11 @@ const PlayerDetails = (props) => {
                             : "https://blog.landr.com/wp-content/uploads/2017/12/How-To-Build-Chords-1200x627.png"
                     }
                     alt=""
-                    width="250"
                 />
             </div>
             <h3 className="detail-title ">
                 {props.title !== null ? props.title : "No song is playi"}
             </h3>
-            <h3 className="detail-artist"> {props.artist} </h3>
         </div>
     );
 };

@@ -17,9 +17,11 @@ const Player = () => {
         title: "",
         artist: "",
     });
+
     // const [maxPlayTime, setMaxPlayTime] = useState(0);
     const [isPlaying, setIsPlaying] = useState(false);
     const [isLoop, setIsLoop] = useState(false);
+    const [songLoaded, setSongLoaded] = useState(false);
 
     useEffect(() => {
         updateSong(`${endpoint}/music/${songDetail.songId}`);
@@ -51,6 +53,7 @@ const Player = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+        setSongLoaded(false);
         const _songDetail = await search_song(inputSong);
         setsongDetail((prevState) => ({
             ...prevState,
@@ -59,7 +62,6 @@ const Player = () => {
             title: _songDetail.title,
             artist: _songDetail.artist,
         }));
-        console.log(_songDetail.songId);
     };
 
     const handlePlay = (e) => {
@@ -81,12 +83,16 @@ const Player = () => {
         setSource(source);
         if (audioRef.current) {
             audioRef.current.oncanplay = () => {
+                setSongLoaded(true);
                 setIsPlaying(true);
+                setSongLoaded(true);
             };
             audioRef.current.pause();
             audioRef.current.load();
         }
     };
+
+    console.log(songLoaded);
 
     return (
         <div className="music-player mt-2">
@@ -106,28 +112,29 @@ const Player = () => {
                 </button>
             </form>
             {/* <div className="playerBackground"></div> */}
+            <audio id="music" src={source} ref={audioRef} autoPlay />
             {
                 <div className="card border-0 text-center c-player">
-                    <div className="card-body">
-                        <audio
-                            id="music"
-                            src={source}
-                            ref={audioRef}
-                            autoPlay
-                        />
-                        <PlayerDetails
-                            img_src={songDetail.thumbnail}
-                            title={songDetail.title}
-                            artist={songDetail.artist}
-                        />
-                        <PlayerController
-                            isPlaying={isPlaying}
-                            handlePlay={handlePlay}
-                            isLoop={isLoop}
-                            handleLoop={handleLoop}
-                            handleVol={handleVol}
-                        />
-                    </div>
+                    {songLoaded ? (
+                        <div className="card-body">
+                            <PlayerDetails
+                                img_src={songDetail.thumbnail}
+                                title={songDetail.title}
+                                artist={songDetail.artist}
+                            />
+                            <PlayerController
+                                audioRef={audioRef}
+                                isPlaying={isPlaying}
+                                handlePlay={handlePlay}
+                                songLoaded={songLoaded}
+                                isLoop={isLoop}
+                                handleLoop={handleLoop}
+                                handleVol={handleVol}
+                            />
+                        </div>
+                    ) : (
+                        <></>
+                    )}
                 </div>
             }
         </div>

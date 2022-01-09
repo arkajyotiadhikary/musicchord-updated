@@ -20,15 +20,15 @@
 }
 
 .c-player--details > div {
-    margin-bottom: 20vh;
+    margin-bottom: 17vh;
 }
 .c-player--details > div > img {
+    margin-top: 20%;
     z-index: 10;
     width: 70%;
     border-radius: 5%;
-    margin: 0px auto;
     max-width: 250px;
-    max-height: 100px;
+    max-height: 150px;
     box-shadow: rgb(38, 57, 77) 0px 20px 30px -10px;
 }
 
@@ -36,22 +36,11 @@
     height: 10vh;
     color: rgb(34, 84, 128);
     text-align: center;
-    font-size: 20px;
+    font-size: 15px;
     text-shadow: 5px 5px 15px rgba(225, 219, 201, 0.433),
         -5px 5px 15px rgba(203, 157, 218, 0.542),
         -5px -5px 15px rgba(215, 189, 245, 0.487),
         5px -5px 15px rgba(81, 67, 21, 0.494);
-}
-
-.c-player--details .detail-artist {
-    height: 1vh;
-    color: rgba(154, 114, 182, 0.802);
-    text-align: center;
-    font-size: 14px;
-    text-shadow: 5px 5px 15px rgba(225, 219, 201, 0.611),
-        -5px 5px 15px rgba(203, 157, 218, 0.542),
-        -10px -10px 25px rgba(215, 189, 245, 0.487),
-        10px -10px 25px rgb(81, 67, 21);
 }
 
 /* .c-player--controls {
@@ -170,7 +159,6 @@ input[type="range"] {
     div {
         width: 4px;
         height: 4px;
-        margin-top: 1px;
         background: #ef6dbc;
         border-radius: 2px;
     }
