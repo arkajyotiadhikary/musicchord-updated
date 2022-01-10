@@ -49,12 +49,24 @@ const AudioPlayer = () => {
 
         intervalRef.current = setInterval(() => {
             if (audioRef.current.ended) {
-                toNextTrack();
+                audioRef.current.pause();
             } else {
                 setTrackProgress(audioRef.current.currentTime);
             }
         }, [1000]);
     };
+
+    const handlePlay = () => {
+        console.log("Play btn pressed", isPlaying);
+        if (isPlaying) {
+            clearInterval(intervalRef.current);
+            setIsPlaying(false);
+        } else {
+            setIsPlaying(true);
+            startTimer();
+        }
+    };
+
     const onScrub = (value) => {
         // Clear any timers already running
         clearInterval(intervalRef.current);
@@ -121,7 +133,7 @@ const AudioPlayer = () => {
                         />
                     </div>
                 </div>
-                <AudioControls isPlaying={isPlaying} />
+                <AudioControls isPlaying={isPlaying} handlePlay={handlePlay} />
             </div>
         </div>
     );
