@@ -10,7 +10,6 @@ export const audio_search = (state = iniState, action) => {
     switch (type) {
         case AUDIO_SEARCH: {
             return {
-                ...state,
                 song_id: payload.song_id,
                 thumbnail: payload.thumbnail,
                 title: payload.title,
