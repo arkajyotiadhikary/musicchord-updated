@@ -3,6 +3,7 @@ const iniState = {
     song_id: "",
     thumbnail: "",
     title: "",
+    source: "",
 };
 
 export const audio_search = (state = iniState, action) => {
@@ -13,6 +14,7 @@ export const audio_search = (state = iniState, action) => {
                 song_id: payload.song_id,
                 thumbnail: payload.thumbnail,
                 title: payload.title,
+                source: payload.source,
             };
         }
         default:

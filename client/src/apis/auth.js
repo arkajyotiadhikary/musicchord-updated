@@ -1,5 +1,6 @@
 // TODO
 // have to add localhost port its wont work without port if its run in localhost
+// test in on heroku host
 
 import axios from "axios";
 const endpoint = "http://localhost:8000";
@@ -7,7 +8,6 @@ const endpoint = "http://localhost:8000";
 // variables
 
 let signInDetails;
-
 
 const signUp = async (formData, history) => {
     const config = {
@@ -37,11 +37,7 @@ const signIn = async (formData, history) => {
 
     try {
         if (process.env.NODE_ENV === "production") {
-            signInDetails = await axios.post(
-                `/auth/signin`,
-                formData,
-                config
-            );
+            signInDetails = await axios.post(`/auth/signin`, formData, config);
         } else {
             signInDetails = await axios.post(
                 `${endpoint}/auth/signin`,
@@ -49,7 +45,6 @@ const signIn = async (formData, history) => {
                 config
             );
         }
-
 
         console.log("Sign In Details", signInDetails);
 
@@ -92,8 +87,4 @@ const loadUser = async () => {
     }
 };
 
-export {
-    signUp,
-    signIn,
-    loadUser
-};
+export { signUp, signIn, loadUser };
