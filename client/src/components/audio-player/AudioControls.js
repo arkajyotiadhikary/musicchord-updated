@@ -6,7 +6,7 @@ const AudioControls = (props) => {
     return (
         <div className="audio-controls d-flex justify-content-center text-center">
             <button
-                className="btn btn-primary my-5"
+                className="btn btn-sm btn-primary my-5"
                 type="button"
                 onClick={handlePlay}
             >
