@@ -1,0 +1,15 @@
+.pomodoro-timer {
+    height: 10rem;
+}
+
+.pomodoro-timer .time {
+    font-size: 5rem;
+}
+
+.pomodoro-setting-input {
+    width: 7rem;
+}
+
+p {
+    margin: 0;
+}

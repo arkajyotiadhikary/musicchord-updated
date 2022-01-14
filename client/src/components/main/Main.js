@@ -1,4 +1,5 @@
-import MusicApp from "../music-player/MusicApp";
+// import MusicApp from "../music-player/MusicApp";
+import AudioPlayer from "../audio-player/AudioPlayer";
 import Navbar from "../navbar/Navbar";
 import Chat from "../chat/Chat";
 import ThirdCol from "../thirdCol/ThirdCol";
@@ -18,7 +19,7 @@ const Main = () => {
                         <Chat />
                     </div>
                     <div className="col-lg-3">
-                        <MusicApp />
+                        <AudioPlayer />
                     </div>
                     <div className="col-lg-3 ">
                         <ThirdCol />

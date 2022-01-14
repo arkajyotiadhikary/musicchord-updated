@@ -32,17 +32,15 @@ const Chat = () => {
         };
         SocketClient.on("connection", (data) => {
             setUserList([...data]);
-            console.log("user-join list", userList);
             getUserDetails();
-            handleUserActivity("New user has joined");
+            // handleUserActivity("New user has joined");
         });
     }, [userDetails, userList]);
 
     useEffect(() => {
         SocketClient.on("disconnection", (data) => {
             setUserList([...data]);
-            console.log("user-left list", userList);
-            handleUserActivity("User left");
+            // handleUserActivity("User left");
         });
     }, [userList]);
 
@@ -65,17 +63,6 @@ const Chat = () => {
         });
     }, []);
     //Handlers
-
-    const handleUserActivity = (message) => {
-        const messageData = message_data(
-            "serverMessage",
-            message,
-            "server",
-            "",
-            ""
-        );
-        setMessages((msg) => [...msg, messageData]);
-    };
 
     const handleUserMessages = (message, time) => {
         SocketClient.emit("message", {
@@ -133,8 +120,11 @@ const Chat = () => {
                                         return <Message chatData={msg} />;
                                     }
                                 })}
+                                <div
+                                    className="end answer text-center my-3"
+                                    ref={messageListDiv}
+                                ></div>
                             </div>
-                            <div ref={messageListDiv}></div>
                         </div>
                     </div>
                     <div className="card-footer bg-white border-0">

@@ -10,6 +10,7 @@ const path = require("path");
 // Import routes
 const authRoutes = require("./router/Auth");
 const musicRoutes = require("./router/Music");
+const radioRoute = require("./router/Radio");
 
 // initialization
 dotenv.config();
@@ -19,17 +20,18 @@ mongoose.connect(process.env.DATABASE_URI, () => {
 
 const app = express();
 const server = http.createServer(app);
-const io = socketIO(server, {
-    cors: {
-        origin: "localhost:3000",
-        methods: ["GET", "POST"],
-        allowedHeaders: ["my-custom-header"],
-        credentials: true,
-    },
-});
+const io = socketIO(server);
+
+// const io = socketIO(server, {
+//     cors: {
+//         origin: "localhost:3000",
+//         methods: ["GET", "POST"],
+//         allowedHeaders: ["my-custom-header"],
+//         credentials: true,
+//     },
+// });
 
 // Socket io connection
-const nsp = io.of("http://localhost:3000/main");
 const userSocketIdMap = new Map();
 
 const addClientToMap = (socket) => {
@@ -67,6 +69,7 @@ app.use(cors());
 app.use(express.json());
 app.use("/auth", authRoutes);
 app.use("/music", musicRoutes);
+app.use("/radio", radioRoute);
 
 // NOTE heroku deploy
 if (process.env.NODE_ENV === "production") {

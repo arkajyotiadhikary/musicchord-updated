@@ -1,3 +1,6 @@
+// TODO
+// make a proper way log outing
+
 const Navbar = () => {
     return (
         <nav className="navbar navbar-expand-lg navbar-light bg-light">
