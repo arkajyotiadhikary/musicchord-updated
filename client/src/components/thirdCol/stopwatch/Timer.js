@@ -73,14 +73,14 @@ const Timer = (props) => {
             <div className="button-stop d-flex justify-content-center text-center w-100">
                 <button
                     value="start_stop"
-                    className="pomodoro-stop btn border-dark mx-2 w-50"
+                    className="pomodoro-stop btn btn-sm border-dark mx-2 w-50"
                     onClick={handleClick}
                 >
                     {play ? "Stop" : "Start"}
                 </button>
                 <button
                     value="reset"
-                    className="pomodoro-stop btn border-dark mx-2 w-50"
+                    className="pomodoro-stop btn btn-sm border-dark mx-2 w-50"
                     onClick={handleClick}
                 >
                     Reset

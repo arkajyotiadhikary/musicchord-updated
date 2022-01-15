@@ -12,7 +12,7 @@ const ThirdCol = () => {
                 <h1>Pomodoro</h1>
                 <button
                     type="button"
-                    className="btn border-dark"
+                    className="btn btn-sm border-dark"
                     data-bs-toggle="modal"
                     data-bs-target="#exampleModal"
                 >
