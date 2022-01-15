@@ -12,7 +12,7 @@ const Pomodoro = () => {
         setTimerWindow(value);
     };
     return (
-        <div className="pomodoro py-5 h-50">
+        <div className="pomodoro py-2">
             <Buttons handleWindow={handleWindow} />
             <Timer
                 timerWindow={timerWindow}

@@ -28,7 +28,7 @@ const AudioPlayer = () => {
 
     // render
     return (
-        <div className="third-col h-100">
+        <div className="second-col h-100">
             <div className="audio-player pt-5">
                 <AudioControls isPlaying={isPlaying} handlePlay={handlePlay} />
             </div>
