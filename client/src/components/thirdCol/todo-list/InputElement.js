@@ -31,11 +31,13 @@ const InputElement = () => {
                                     <input
                                         className="form-control form-control-sm est-input"
                                         type="number"
+                                        min="0"
                                     />
                                     <p className="mx-2">/</p>
                                     <input
                                         className="form-control form-control-sm est-input"
                                         type="number"
+                                        min="0"
                                     />
                                 </div>
                             </div>

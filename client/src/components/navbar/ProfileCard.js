@@ -10,7 +10,7 @@ const ProfileCard = () => {
     };
 
     return (
-        <div className="dropdown-item card profile-card">
+        <div className="dropdown-item card profile-card ">
             <div className="header card-header">
                 <img
                     className="img-thumbnail rounded-circle mx-auto d-block w-50 h-50"
@@ -22,13 +22,7 @@ const ProfileCard = () => {
                 </h1>
                 <h2 className="card-tittle text-center h6">User Description</h2>
             </div>
-            {/* TODO have to work on overflow wrap */}
-            {/* <div className="card-body">
-                <p className="card-text">
-                    Lorem sed dolores ut labore vero. Sit justo dolor no.Lorem
-                    sed dolores ut labore vero. Sit justo dolor no.
-                </p>
-            </div> */}
+
             <div className="card-footer bg-transparent">
                 <button
                     className="btn btn-sm btn-outline-primary text-end"
