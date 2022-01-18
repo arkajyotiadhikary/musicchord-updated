@@ -1,6 +1,7 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUser } from "@fortawesome/free-solid-svg-icons";
 import ProfileCard from "./ProfileCard";
+import EditProfile from "./EditProfile";
 
 const Navbar = () => {
     return (
@@ -52,6 +53,7 @@ const Navbar = () => {
                                 <ProfileCard />
                             </ul>
                         </li>
+                        <EditProfile />
                     </ul>
                 </div>
             </div>
