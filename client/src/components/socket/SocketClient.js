@@ -1,6 +1,6 @@
 import { io } from "socket.io-client";
 
-const SocketClient = io(`/?userName=${localStorage.getItem("username")}`, {
+const SocketClient = io(`/`, {
     transports: ["websocket"],
     withCredentials: true,
     extraHeaders: {

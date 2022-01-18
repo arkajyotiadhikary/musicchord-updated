@@ -56,6 +56,7 @@ const Signin = () => {
                             <form onSubmit={onSubmit}>
                                 <div className="form-floating mb-3">
                                     <input
+                                        defaultValue={""}
                                         type="email"
                                         className="form-control"
                                         id="floatingInputUsername"
@@ -73,6 +74,7 @@ const Signin = () => {
 
                                 <div className="form-floating mb-3">
                                     <input
+                                        defaultValue={""}
                                         type="password"
                                         className="form-control"
                                         id="floatingPassword"

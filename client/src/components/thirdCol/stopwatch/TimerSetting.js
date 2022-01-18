@@ -124,8 +124,8 @@ const TimerSetting = () => {
                                 <p>Long Break Interval</p>
                                 <input
                                     className="internval-input pomodoro-setting-input text-center"
-                                    value="4"
                                     type="number"
+                                    defaultValue={4}
                                 />
                             </div>
                         </div>

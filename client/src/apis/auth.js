@@ -3,6 +3,8 @@
 // test in on heroku host
 
 import axios from "axios";
+import store from "../store";
+import user from "../actions/user";
 const endpoint = "http://localhost:8000";
 
 // variables
@@ -17,7 +19,7 @@ const signUp = async (formData, history) => {
     };
 
     try {
-        await axios.post(`/auth/signup`, formData, config);
+        await axios.post(`${endpoint}/auth/signup`, formData, config);
         history.push("/signin");
     } catch (error) {
         console.log("Error", error.response);
@@ -47,9 +49,8 @@ const signIn = async (formData, history) => {
         }
 
         console.log("Sign In Details", signInDetails);
-
+        store.dispatch(user(signInDetails.data));
         localStorage.setItem("token", signInDetails.data.token);
-        localStorage.setItem("username", signInDetails.data.username);
         history.push("/main");
     } catch (error) {
         const err = error.response;
@@ -73,8 +74,13 @@ const loadUser = async () => {
     };
 
     try {
-        signInDetails = await axios.post(`/auth/loaduser`, body, config);
+        signInDetails = await axios.post(
+            `${endpoint}/auth/loaduser`,
+            body,
+            config
+        );
         console.log("Load User Details", signInDetails);
+        store.dispatch(user(signInDetails.data));
         return signInDetails;
     } catch (error) {
         console.log("Error", error.response);
