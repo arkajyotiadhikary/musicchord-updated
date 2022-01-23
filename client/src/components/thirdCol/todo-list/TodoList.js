@@ -1,20 +1,18 @@
 import "./TodoList.scss";
 import ListElement from "./ListElement";
 import InputElement from "./InputElement";
+import { useSelector } from "react-redux";
 
 const TodoList = () => {
-    const handleClick = () => {};
+    const todo_list = useSelector((state) => state.add_todo);
     return (
         <div className="todo-list">
             Tasks
             <hr className="m-0" />
             <ul className="inserted-elements-list p-0">
-                <ListElement />
-                <ListElement />
-                <ListElement />
-                <ListElement />
-                <ListElement />
-                <ListElement />
+                {todo_list.map((item) => (
+                    <ListElement />
+                ))}
             </ul>
             <div className="add-button d-flex justify-content-center">
                 <button
