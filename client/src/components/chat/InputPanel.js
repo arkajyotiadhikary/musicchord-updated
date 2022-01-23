@@ -33,6 +33,7 @@ const InputPanel = (prop) => {
         <div>
             <form className="chat-input d-flex" onSubmit={handleSubmit}>
                 <input
+                    defaultValue={""}
                     ref={inputField}
                     onChange={handleInput}
                     value={input}

@@ -13,9 +13,8 @@ const AudioPlayer = () => {
         } else {
             audioRef.current.pause();
         }
+        console.log(audioRef.current);
     }, [isPlaying]);
-
-    // For progress bar
 
     const handlePlay = () => {
         console.log("Play btn pressed", isPlaying);
@@ -26,11 +25,22 @@ const AudioPlayer = () => {
         }
     };
 
+    // VOLUME
+    const [volume, setVolume] = useState(0.3);
+    useEffect(() => {
+        audioRef.current.volume = volume;
+        console.log("volume of the audio player is", audioRef.current.volume);
+    }, [volume]);
+
     // render
     return (
-        <div className="third-col h-100">
+        <div className="second-col h-100">
             <div className="audio-player pt-5">
-                <AudioControls isPlaying={isPlaying} handlePlay={handlePlay} />
+                <AudioControls
+                    setVolume={setVolume}
+                    isPlaying={isPlaying}
+                    handlePlay={handlePlay}
+                />
             </div>
         </div>
     );

@@ -10,7 +10,6 @@ const path = require("path");
 // Import routes
 const authRoutes = require("./router/Auth");
 const musicRoutes = require("./router/Music");
-const radioRoute = require("./router/Radio");
 
 // initialization
 dotenv.config();
@@ -20,47 +19,45 @@ mongoose.connect(process.env.DATABASE_URI, () => {
 
 const app = express();
 const server = http.createServer(app);
-const io = socketIO(server);
-
-// const io = socketIO(server, {
-//     cors: {
-//         origin: "localhost:3000",
-//         methods: ["GET", "POST"],
-//         allowedHeaders: ["my-custom-header"],
-//         credentials: true,
-//     },
-// });
+const io = socketIO(server, {
+    cors: {
+        origin: "localhost:3000",
+        methods: ["GET", "POST"],
+        allowedHeaders: ["my-custom-header"],
+        credentials: true,
+    },
+});
 
 // Socket io connection
+const nsp = io.of("/main");
 const userSocketIdMap = new Map();
+let userList = [];
 
-const addClientToMap = (socket) => {
-    let userName = socket.handshake.query.userName;
-    if (!userSocketIdMap.has(socket.id)) {
-        userSocketIdMap.set(socket.id, userName);
+// add new user to the user list
+const addClientToMap = (userName, socketId) => {
+    if (!userSocketIdMap.has(socketId)) {
+        userSocketIdMap.set(socketId, userName);
     }
 };
-const removeClientFromMap = (socketID) => {
-    if (userSocketIdMap.has(socketID)) userSocketIdMap.delete(socketID);
-};
 
-const updatedUserList = () => {
-    return [...userSocketIdMap.values()];
-};
+// remove user from the user list
+const removeClientFromMap = (socketID) => {};
 
-io.on("connection", (socket) => {
-    addClientToMap(socket);
-    io.emit("connection", updatedUserList());
+io.of("/main").on("connection", (socket) => {
+    let userName = socket.handshake.query.userName;
+    addClientToMap(userName, socket.id);
+    userList = [...userSocketIdMap.values()];
+    console.log("User List", userList);
+    io.of("/main").emit("connection", userList);
     socket.on("message", (data) => {
-        socket.broadcast.emit(
-            "client-message",
-            data,
-            socket.handshake.query.userName
-        );
+        socket.broadcast.emit("client-message", data, userName);
     });
     socket.on("disconnect", () => {
-        removeClientFromMap(socket.id);
-        io.emit("disconnection", updatedUserList());
+        if (userSocketIdMap.has(socket.id)) {
+            userSocketIdMap.delete(socket.id);
+            userList = [...userSocketIdMap.values()];
+            io.of("/main").emit("disconnection", userList);
+        }
     });
 });
 
@@ -69,7 +66,6 @@ app.use(cors());
 app.use(express.json());
 app.use("/auth", authRoutes);
 app.use("/music", musicRoutes);
-app.use("/radio", radioRoute);
 
 // NOTE heroku deploy
 if (process.env.NODE_ENV === "production") {

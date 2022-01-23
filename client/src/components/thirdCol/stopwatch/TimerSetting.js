@@ -124,12 +124,12 @@ const TimerSetting = () => {
                                 <p>Long Break Interval</p>
                                 <input
                                     className="internval-input pomodoro-setting-input text-center"
-                                    value="4"
                                     type="number"
+                                    defaultValue={4}
                                 />
                             </div>
                         </div>
-                        <div className="modal-footer">
+                        <div className="modal-footer border-0">
                             <button
                                 type="button"
                                 className="btn btn-secondary"

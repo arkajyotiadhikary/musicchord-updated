@@ -1,12 +1,12 @@
 import { combineReducers } from "redux";
 import { user } from "./user";
 import { pomodoro_times } from "./pomodoro_times";
-import { audio_search } from "./audio_search";
+import { logedin } from "./logedin";
 
 const rootReducer = combineReducers({
     user,
     pomodoro_times,
-    audio_search,
+    logedin,
 });
 
 export default rootReducer;

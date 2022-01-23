@@ -1,4 +1,7 @@
-//Import
+// TODO
+//  usernames for all the messages
+// update the list whenever a user loged in
+
 import React, { useState, useEffect, useRef } from "react";
 import message_data from "./message_data";
 import Message from "./Message";
@@ -7,43 +10,37 @@ import UserJoinMessage from "./UserJoinMessage";
 import User from "./User";
 import "./Chat.css";
 import SocketClient from "../socket/SocketClient";
-import { loadUser } from "../../apis/auth";
+import { useSelector } from "react-redux";
 // ---
 
 const Chat = () => {
-    //States
+    // $ message list state
     const [messages, setMessages] = useState([]);
+    // $ online user list state
     const [userList, setUserList] = useState([]);
 
     const messageListDiv = useRef(null);
 
-    //useEffect Hooks
-    const [userDetails, setUserDetails] = useState({ userDetails: {} });
+    // $ username for the me_user
+    const meUsername = useSelector((state) => state.user.username);
 
+    // # UPDATING_USER_LIST
+    // @ON_CONNECT
     useEffect(() => {
-        const getUserDetails = async () => {
-            const loadedUser = await loadUser();
-            if (loadedUser) {
-                setUserDetails({
-                    ...userDetails,
-                    userDetails: loadedUser.data.data,
-                });
-            }
-        };
         SocketClient.on("connection", (data) => {
             setUserList([...data]);
-            getUserDetails();
-            // handleUserActivity("New user has joined");
+            handleUserActivity("New user has joined");
         });
-    }, [userDetails, userList]);
-
+    }, [userList]);
+    // @ON_DISCONNECT
     useEffect(() => {
         SocketClient.on("disconnection", (data) => {
             setUserList([...data]);
-            // handleUserActivity("User left");
+            handleUserActivity("User left");
         });
     }, [userList]);
 
+    // # HANDALING_CLIENT_MESSAGES
     useEffect(() => {
         const handleClientMessage = (data, username) => {
             const messageData = message_data(
@@ -62,24 +59,39 @@ const Chat = () => {
             console.log("Client message recived");
         });
     }, []);
-    //Handlers
 
-    const handleUserMessages = (message, time) => {
-        SocketClient.emit("message", {
+    useEffect(() => {}, []);
+
+    const handleUserActivity = (message) => {
+        const messageData = message_data(
+            "serverMessage",
             message,
-            time,
-        });
+            "server",
+            "",
+            ""
+        );
+        setMessages((msg) => [...msg, messageData]);
+    };
 
+    // HANDLE_USER_MESSAGES
+    const handleUserMessage = (message) => {
+        // time for the message
+        const date = new Date();
+        const time = date.getTime();
         const messageData = message_data(
             "selfMessage",
             message,
-            localStorage.getItem("username"),
+            meUsername,
             "",
             time
         );
-
         setMessages((messages) => [...messages, messageData]);
         handleScroll();
+        SocketClient.emit("message", {
+            message,
+            meUsername,
+            time,
+        });
     };
 
     const handleScroll = () => {
@@ -120,15 +132,12 @@ const Chat = () => {
                                         return <Message chatData={msg} />;
                                     }
                                 })}
-                                <div
-                                    className="end answer text-center my-3"
-                                    ref={messageListDiv}
-                                ></div>
                             </div>
+                            <div ref={messageListDiv}></div>
                         </div>
                     </div>
                     <div className="card-footer bg-white border-0">
-                        <InputPanel handleUserMessages={handleUserMessages} />
+                        <InputPanel handleUserMessages={handleUserMessage} />
                     </div>
                 </div>
             </div>

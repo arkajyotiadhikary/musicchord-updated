@@ -58,6 +58,7 @@ const Signup = () => {
                             <form onSubmit={handleSubmit}>
                                 <div className="form-floating mb-3">
                                     <input
+                                        defaultValue={""}
                                         type="text"
                                         className="form-control"
                                         id="floatingInputUsername"
@@ -74,6 +75,7 @@ const Signup = () => {
                                 </div>
                                 <div className="form-floating mb-3">
                                     <input
+                                        defaultValue={""}
                                         type="email"
                                         className="form-control"
                                         id="floatingInputEmail"
@@ -88,6 +90,7 @@ const Signup = () => {
                                 </div>
                                 <div className="form-floating mb-3">
                                     <input
+                                        defaultValue={""}
                                         type="password"
                                         className="form-control"
                                         id="floatingPassword"
