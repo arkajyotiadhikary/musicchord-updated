@@ -5,6 +5,7 @@
 import axios from "axios";
 import store from "../store";
 import user from "../actions/user";
+import logedin from "../actions/logedin";
 const endpoint = "http://localhost:8000";
 
 // variables

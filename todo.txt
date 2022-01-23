@@ -1,0 +1,15 @@
+TODO - 
+
+Music 
+* Add volume 
+
+Auth
+* password change
+* about 
+* username change
+
+Chat
+* online users are not displayed
+
+Main 
+* Private routes
