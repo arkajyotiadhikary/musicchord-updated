@@ -3,7 +3,7 @@
 
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
-import pomodoro_times from "../../../actions/pomodoro_times";
+import pomodoro_times from "../../../../actions/pomodoro_times";
 
 const TimerSetting = () => {
     const dispatch = useDispatch();
