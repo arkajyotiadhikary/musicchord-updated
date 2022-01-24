@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 
 class NotePad extends React.Component {
     constructor(props) {
@@ -41,7 +41,7 @@ class NotePad extends React.Component {
                         <textarea
                             className="form-control"
                             style={{ resize: "none" }}
-                            rows="5"
+                            rows="3"
                             cols="35"
                             placeholder="Enter Notes here"
                             id="notes-value"
@@ -56,7 +56,11 @@ class NotePad extends React.Component {
                         </button>
                     </div>
                 </div>
-                <div className="display-notes mt-2">
+                <p>Notes</p>
+                <div
+                    className="display-notes mt-2 overflow-auto border"
+                    style={{ height: "16rem" }}
+                >
                     {this.state.noteList.length > 0
                         ? this.state.noteList.map((item, index) => (
                               <div
