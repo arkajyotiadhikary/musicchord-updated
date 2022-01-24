@@ -1,14 +1,20 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCoffee } from "@fortawesome/free-solid-svg-icons";
-const ListElement = () => {
+const ListElement = (props) => {
+    const { task_title, pomodoro_amt, pomodoro_outof, task_note } =
+        props.details;
     return (
-        <div className="d-flex justify-content-start align-items-center py-2 my-2 border shadow-sm">
-            <input className="m-2" type="checkbox" />
-            <p className="task-title">asdasdasd</p>
-            <div>
-                <p>1/4</p>
+        <div className=" py-2 my-2 border shadow-sm">
+            <div className="d-flex justify-content-start align-items-center ">
+                <input className="m-2" type="checkbox" />
+                <p className="task-title">{task_title}</p>
+                <div>
+                    <p>
+                        {pomodoro_amt}/{pomodoro_outof}
+                    </p>
+                </div>
+                <button className="btn btn-sm">&#xFE19;</button>
             </div>
-            <button className="btn btn-sm">&#xFE19;</button>
         </div>
     );
 };

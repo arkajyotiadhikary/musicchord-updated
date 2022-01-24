@@ -11,7 +11,7 @@ const TodoList = () => {
             <hr className="m-0" />
             <ul className="inserted-elements-list p-0">
                 {todo_list.map((item) => (
-                    <ListElement />
+                    <ListElement details={item} />
                 ))}
             </ul>
             <div className="add-button d-flex justify-content-center">

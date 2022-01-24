@@ -7,8 +7,8 @@ const InputElement = () => {
 
     const [taskData, setTaskData] = useState({
         task_title: "",
-        pomodoro_amt: "",
-        pomodoro_outof: "",
+        pomodoro_amt: 0,
+        pomodoro_outof: 1,
         task_note: "",
     });
 
@@ -24,8 +24,8 @@ const InputElement = () => {
         dispatch(add_todo(taskData));
         setTaskData({
             task_title: "",
-            pomodoro_amt: "",
-            pomodoro_outof: "",
+            pomodoro_amt: 0,
+            pomodoro_outof: 1,
             task_note: "",
         });
     };
@@ -71,7 +71,7 @@ const InputElement = () => {
                                     <p className="mx-2">/</p>
                                     <input
                                         name="pomodoro_outof"
-                                        defaultValue={0}
+                                        defaultValue={1}
                                         className="form-control form-control-sm est-input"
                                         type="number"
                                         min="0"
