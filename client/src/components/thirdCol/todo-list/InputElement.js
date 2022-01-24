@@ -1,4 +1,34 @@
+import React, { useState, useEffect } from "react";
+import { useDispatch } from "react-redux";
+import add_todo from "../../../actions/add_todo";
+
 const InputElement = () => {
+    const dispatch = useDispatch();
+
+    const [taskData, setTaskData] = useState({
+        task_title: "",
+        pomodoro_amt: 0,
+        pomodoro_outof: 1,
+        task_note: "",
+    });
+
+    const handleChange = (e) => {
+        setTaskData({
+            ...taskData,
+            [e.target.name]: e.target.value,
+        });
+    };
+
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        dispatch(add_todo(taskData));
+        setTaskData({
+            task_title: "",
+            pomodoro_amt: 0,
+            pomodoro_outof: 1,
+            task_note: "",
+        });
+    };
     return (
         <div
             id="add-todo-element"
@@ -8,7 +38,7 @@ const InputElement = () => {
         >
             <div className="modal-dialog modal-dialog-centered ">
                 <div className="modal-content">
-                    <form>
+                    <form onSubmit={handleSubmit}>
                         <div className="modal-header form-group bg-light">
                             <h5>Add Task</h5>
                             <button
@@ -21,33 +51,42 @@ const InputElement = () => {
                         <div className="modal-body">
                             <div className="task-input">
                                 <input
+                                    name="task_title"
                                     className="task-input w-100 form-control"
                                     placeholder="Enter your task"
+                                    onChange={handleChange}
                                 />
                             </div>
                             <div className="est-pomodoro mt-3">
                                 <p>Act/Est Pomodoros</p>
                                 <div className="d-flex mt-2">
                                     <input
+                                        name="pomodoro_amt"
+                                        defaultValue={0}
                                         className="form-control form-control-sm est-input"
                                         type="number"
                                         min="0"
+                                        onChange={handleChange}
                                     />
                                     <p className="mx-2">/</p>
                                     <input
+                                        name="pomodoro_outof"
+                                        defaultValue={1}
                                         className="form-control form-control-sm est-input"
                                         type="number"
                                         min="0"
+                                        onChange={handleChange}
                                     />
                                 </div>
                             </div>
                             <div className="task-note mt-3">
                                 <p>Task note</p>
                                 <textarea
+                                    name="task_note"
                                     className="form-control mt-2"
                                     rows="5"
                                     cols="60"
-                                    name="description"
+                                    onChange={handleChange}
                                 ></textarea>
                             </div>
                         </div>
@@ -59,6 +98,7 @@ const InputElement = () => {
                                 Cancel
                             </button>
                             <button
+                                type="submit"
                                 className="btn btn-primary"
                                 data-bs-dismiss="modal"
                             >
