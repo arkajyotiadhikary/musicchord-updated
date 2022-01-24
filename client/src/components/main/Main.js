@@ -1,8 +1,7 @@
-// import MusicApp from "../music-player/MusicApp";
-import AudioPlayer from "../audio-player/AudioPlayer";
+import AudioPlayer from "./secondCol/audio-player/AudioPlayer";
 import Navbar from "../navbar/Navbar";
-import Chat from "../chat/Chat";
-import ThirdCol from "../thirdCol/ThirdCol";
+import Chat from "./firstCol/chat/Chat";
+import ThirdCol from "./thirdCol/ThirdCol";
 import "./Main.css";
 
 const Main = () => {
