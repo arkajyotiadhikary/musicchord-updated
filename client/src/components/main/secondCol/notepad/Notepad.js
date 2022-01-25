@@ -50,7 +50,7 @@ const Notepad = () => {
             <p>Notes</p>
             <div
                 className="display-notes mt-2 overflow-auto border"
-                style={{ height: "16rem" }}
+                style={{ height: "15rem" }}
             >
                 {notesList.length > 0
                     ? notesList.map((item, index) => (

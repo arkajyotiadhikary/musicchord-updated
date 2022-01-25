@@ -9,7 +9,7 @@ const { encrypt, decrypt } = require("../utils/encrypt");
 
 const signIn = async (req, res) => {
     const { email, password } = req.body;
-    console.log("Sign in request recived");
+
     try {
         const hashedData = await User.findOne({ email });
 
@@ -29,8 +29,6 @@ const signIn = async (req, res) => {
             msg: "User signed in successfully",
             token,
             username: hashedData.username,
-            about: hashedData.about,
-            email: hashedData.email,
         });
     } catch (error) {
         res.status(500).json({ msg: "Error signing in!!!" });
@@ -47,7 +45,6 @@ const signUp = async (req, res) => {
 
         await User.create({
             username: req.body.username,
-            about: "",
             password: hashedPassword,
             email: req.body.email.toLowerCase(),
         });
@@ -75,8 +72,6 @@ const loadUser = async (req, res) => {
         res.status(200).json({
             msg: "User loaded successfully",
             username: verifiedUserDetails.username,
-            about: verifiedUserDetails.about,
-            email: verifiedUserDetails.email,
         });
     } catch (error) {
         const err = error.response;
