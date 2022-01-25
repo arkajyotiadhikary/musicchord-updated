@@ -2,8 +2,7 @@ import AudioPlayer from "./secondCol/audio-player/AudioPlayer";
 import Navbar from "../navbar/Navbar";
 import Chat from "./firstCol/chat/Chat";
 import ThirdCol from "./thirdCol/ThirdCol";
-import NotePad from "./secondCol/notepad/Notepad";
-import NotePad1 from "./secondCol/notepad/NotePad1";
+import Notepad from "./secondCol/notepad/Notepad";
 import "./Main.css";
 
 const Main = () => {
@@ -21,7 +20,7 @@ const Main = () => {
                     </div>
                     <div className="col-lg-3">
                         <AudioPlayer />
-                        <NotePad1 />
+                        <Notepad />
                     </div>
                     <div className="col-lg-3 ">
                         <ThirdCol />
