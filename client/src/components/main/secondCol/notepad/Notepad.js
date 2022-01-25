@@ -10,6 +10,7 @@ const Notepad = () => {
 
         setNotesList([...notesList, obj]);
         setNotesText("");
+        console.log("noteList", notesList);
     };
     const handleChange = () => {
         const notes = document.getElementById("notes-value").value;
@@ -18,7 +19,7 @@ const Notepad = () => {
 
     // Have to fix this later
     const handleDelete = (id) => {
-        const updatedNotes = notesList.filter((index) => index !== id);
+        const updatedNotes = notesList.filter((note, index) => index !== id);
         setNotesList(updatedNotes);
     };
 
