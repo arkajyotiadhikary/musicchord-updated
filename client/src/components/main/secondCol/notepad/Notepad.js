@@ -10,7 +10,6 @@ const Notepad = () => {
 
         setNotesList([...notesList, obj]);
         setNotesText("");
-        console.log("noteList", notesList);
     };
     const handleChange = () => {
         const notes = document.getElementById("notes-value").value;
@@ -18,7 +17,10 @@ const Notepad = () => {
     };
 
     // Have to fix this later
-    const handleDelete = (index) => {};
+    const handleDelete = (id) => {
+        const updatedNotes = notesList.filter((index) => index !== id);
+        setNotesList(updatedNotes);
+    };
 
     return (
         <div className="Note-pad mt-4">
@@ -57,7 +59,7 @@ const Notepad = () => {
                                   <h5>Note {index}</h5>
                                   <button
                                       className="delete-note btn btn-sm"
-                                      onClick={handleDelete}
+                                      onClick={() => handleDelete(index)}
                                   >
                                       X
                                   </button>

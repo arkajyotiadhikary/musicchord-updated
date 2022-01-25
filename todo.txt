@@ -11,5 +11,3 @@ Chat
 Main 
 * Private routes
 
-Todo List
-* Add new task and remove task
