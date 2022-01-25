@@ -52,6 +52,7 @@ const InputElement = () => {
                             <div className="task-input">
                                 <input
                                     name="task_title"
+                                    autoFocus
                                     className="task-input w-100 form-control"
                                     placeholder="Enter your task"
                                     onChange={handleChange}
@@ -83,6 +84,7 @@ const InputElement = () => {
                                 <p>Task note</p>
                                 <textarea
                                     name="task_note"
+                                    style={{ resize: "none" }}
                                     className="form-control mt-2"
                                     rows="5"
                                     cols="60"

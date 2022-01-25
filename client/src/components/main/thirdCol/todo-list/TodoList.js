@@ -7,7 +7,7 @@ const TodoList = () => {
     const todo_list = useSelector((state) => state.add_todo);
     return (
         <div className="todo-list">
-            Tasks
+            <div className="header fw-bolder py-2">Task</div>
             <hr className="m-0" />
             <ul className="inserted-elements-list p-0">
                 {todo_list.map((item) => (
