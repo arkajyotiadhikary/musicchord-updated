@@ -6,8 +6,10 @@ const ListElement = (props) => {
     return (
         <div className=" py-2 my-2 border shadow-sm">
             <div className="d-flex justify-content-start align-items-center ">
-                <input className="m-2" type="checkbox" />
-                <p className="task-title font-monospace">{task_title}</p>
+                <input className="m-2 form-check-input" type="checkbox" />
+                <p className="task-title font-monospace text-break bg-light p-1">
+                    {task_title}
+                </p>
                 <div>
                     <p>
                         {pomodoro_amt}/{pomodoro_outof}
