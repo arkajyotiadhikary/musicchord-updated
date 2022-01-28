@@ -1,5 +1,5 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCoffee } from "@fortawesome/free-solid-svg-icons";
+import { faTrash } from "@fortawesome/free-solid-svg-icons";
 const ListElement = (props) => {
     const {
         details: { task_title, pomodoro_amt, pomodoro_outof, task_note },
@@ -21,10 +21,10 @@ const ListElement = (props) => {
                 </div>
                 <button
                     type="button"
-                    className="btn btn-sm"
+                    className="btn btn-sm text-danger"
                     onClick={() => deleteItems(index)}
                 >
-                    &#xFE19;
+                    <FontAwesomeIcon icon={faTrash} />
                 </button>
             </div>
         </div>
