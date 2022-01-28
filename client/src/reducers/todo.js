@@ -1,8 +1,8 @@
-import { ADD_TODO } from "../actions/types";
+import { ADD_TODO, REMOVE_TODO } from "../actions/types";
 
 const iniState = [];
 
-export const add_todo = (state = iniState, action) => {
+export const todo = (state = iniState, action) => {
     switch (action.type) {
         case ADD_TODO: {
             return [
@@ -14,6 +14,9 @@ export const add_todo = (state = iniState, action) => {
                     task_note: action.payload.task_note,
                 },
             ];
+        }
+        case REMOVE_TODO: {
+            return [...action.payload];
         }
         default:
             return state;
