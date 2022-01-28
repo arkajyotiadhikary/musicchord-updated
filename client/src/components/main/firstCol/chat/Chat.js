@@ -1,7 +1,3 @@
-// TODO
-//  usernames for all the messages
-// update the list whenever a user loged in
-
 import React, { useState, useEffect, useRef } from "react";
 import message_data from "./message_data";
 import Message from "./Message";
@@ -10,37 +6,45 @@ import UserJoinMessage from "./UserJoinMessage";
 import User from "./User";
 import "./Chat.css";
 import SocketClient from "../../../socket/SocketClient";
-import { useSelector } from "react-redux";
+import { loadUser } from "../../../../apis/auth";
 // ---
 
 const Chat = () => {
-    // $ message list state
+    //States
     const [messages, setMessages] = useState([]);
-    // $ online user list state
     const [userList, setUserList] = useState([]);
 
     const messageListDiv = useRef(null);
 
-    // $ username for the me_user
-    const meUsername = useSelector((state) => state.user.username);
+    //useEffect Hooks
+    const [userDetails, setUserDetails] = useState({ userDetails: {} });
 
-    // # UPDATING_USER_LIST
-    // @ON_CONNECT
     useEffect(() => {
+        const getUserDetails = async () => {
+            const loadedUser = await loadUser();
+            if (loadedUser) {
+                setUserDetails({
+                    ...userDetails,
+                    userDetails: loadedUser.data.data,
+                });
+            }
+        };
         SocketClient.on("connection", (data) => {
             setUserList([...data]);
+            console.log("user-join list", userList);
+            getUserDetails();
             handleUserActivity("New user has joined");
         });
-    }, [userList]);
-    // @ON_DISCONNECT
+    }, [userDetails, userList]);
+
     useEffect(() => {
         SocketClient.on("disconnection", (data) => {
             setUserList([...data]);
+            console.log("user-left list", userList);
             handleUserActivity("User left");
         });
     }, [userList]);
 
-    // # HANDALING_CLIENT_MESSAGES
     useEffect(() => {
         const handleClientMessage = (data, username) => {
             const messageData = message_data(
@@ -59,8 +63,7 @@ const Chat = () => {
             console.log("Client message recived");
         });
     }, []);
-
-    useEffect(() => {}, []);
+    //Handlers
 
     const handleUserActivity = (message) => {
         const messageData = message_data(
@@ -73,25 +76,22 @@ const Chat = () => {
         setMessages((msg) => [...msg, messageData]);
     };
 
-    // HANDLE_USER_MESSAGES
-    const handleUserMessage = (message) => {
-        // time for the message
-        const date = new Date();
-        const time = date.getTime();
+    const handleUserMessages = (message, time) => {
+        SocketClient.emit("message", {
+            message,
+            time,
+        });
+
         const messageData = message_data(
             "selfMessage",
             message,
-            meUsername,
+            localStorage.getItem("username"),
             "",
             time
         );
+
         setMessages((messages) => [...messages, messageData]);
         handleScroll();
-        SocketClient.emit("message", {
-            message,
-            meUsername,
-            time,
-        });
     };
 
     const handleScroll = () => {
@@ -137,7 +137,7 @@ const Chat = () => {
                         </div>
                     </div>
                     <div className="card-footer bg-white border-0">
-                        <InputPanel handleUserMessages={handleUserMessage} />
+                        <InputPanel handleUserMessages={handleUserMessages} />
                     </div>
                 </div>
             </div>

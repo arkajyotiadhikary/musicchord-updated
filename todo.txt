@@ -1,4 +1,5 @@
 TODO - 
+* delete todo elements
 
 Auth
 * password change

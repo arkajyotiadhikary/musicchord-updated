@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from "react";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faTrash } from "@fortawesome/free-solid-svg-icons";
 
 const Notepad = () => {
     const [notesText, setNotesText] = useState("");
@@ -48,7 +50,7 @@ const Notepad = () => {
             <p>Notes</p>
             <div
                 className="display-notes mt-2 overflow-auto border"
-                style={{ height: "16rem" }}
+                style={{ height: "15rem" }}
             >
                 {notesList.length > 0
                     ? notesList.map((item, index) => (
@@ -57,15 +59,18 @@ const Notepad = () => {
                               className={`notes-item text-break border shadow-sm p-2 ${index}`}
                           >
                               <div className="note-head d-flex justify-content-between align-items-center">
-                                  <h5>Note {index}</h5>
+                                  <p className="fw-bold">Note {index + 1}</p>
                                   <button
                                       className="delete-note btn btn-sm"
                                       onClick={() => handleDelete(index)}
                                   >
-                                      X
+                                      <FontAwesomeIcon
+                                          icon={faTrash}
+                                          className="text-danger"
+                                      />
                                   </button>
                               </div>
-                              {item.notes}
+                              <div className="fw-normal">{item.notes}</div>
                           </div>
                       ))
                     : ""}

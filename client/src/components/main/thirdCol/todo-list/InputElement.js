@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
-import add_todo from "../../../../actions/add_todo";
+import { add_todo } from "../../../../actions/todo";
 
 const InputElement = () => {
     const dispatch = useDispatch();
@@ -28,6 +28,7 @@ const InputElement = () => {
             pomodoro_outof: 1,
             task_note: "",
         });
+        e.target.value = "";
     };
     return (
         <div
@@ -38,7 +39,7 @@ const InputElement = () => {
         >
             <div className="modal-dialog modal-dialog-centered ">
                 <div className="modal-content">
-                    <form onSubmit={handleSubmit}>
+                    <form className="needs-validation" onSubmit={handleSubmit}>
                         <div className="modal-header form-group bg-light">
                             <h5>Add Task</h5>
                             <button
@@ -50,11 +51,18 @@ const InputElement = () => {
                         </div>
                         <div className="modal-body">
                             <div className="task-input">
+                                <div className="invalid-feedback">
+                                    This Can not be empty
+                                </div>
                                 <input
                                     name="task_title"
+                                    value={taskData.task_title}
+                                    id="validation1"
+                                    autoFocus
                                     className="task-input w-100 form-control"
                                     placeholder="Enter your task"
                                     onChange={handleChange}
+                                    required
                                 />
                             </div>
                             <div className="est-pomodoro mt-3">
@@ -62,6 +70,7 @@ const InputElement = () => {
                                 <div className="d-flex mt-2">
                                     <input
                                         name="pomodoro_amt"
+                                        value={taskData.pomodoro_amt}
                                         defaultValue={0}
                                         className="form-control form-control-sm est-input"
                                         type="number"
@@ -71,6 +80,7 @@ const InputElement = () => {
                                     <p className="mx-2">/</p>
                                     <input
                                         name="pomodoro_outof"
+                                        value={taskData.pomodoro_outof}
                                         defaultValue={1}
                                         className="form-control form-control-sm est-input"
                                         type="number"
@@ -83,6 +93,8 @@ const InputElement = () => {
                                 <p>Task note</p>
                                 <textarea
                                     name="task_note"
+                                    value={taskData.task_note}
+                                    style={{ resize: "none" }}
                                     className="form-control mt-2"
                                     rows="5"
                                     cols="60"

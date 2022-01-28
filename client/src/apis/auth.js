@@ -52,6 +52,8 @@ const signIn = async (formData, history) => {
         console.log("Sign In Details", signInDetails);
         store.dispatch(user(signInDetails.data));
         localStorage.setItem("token", signInDetails.data.token);
+        localStorage.setItem("username", signInDetails.data.username);
+
         history.push("/main");
     } catch (error) {
         const err = error.response;
