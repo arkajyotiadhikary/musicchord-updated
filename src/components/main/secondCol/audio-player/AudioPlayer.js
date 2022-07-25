@@ -35,7 +35,7 @@ const AudioPlayer = () => {
     // render
     return (
         <div className="second-col">
-            <div className="audio-player pt-5">
+            <div className="audio-player">
                 <AudioControls
                     setVolume={setVolume}
                     isPlaying={isPlaying}
