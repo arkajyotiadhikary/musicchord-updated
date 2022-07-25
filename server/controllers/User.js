@@ -12,6 +12,6 @@ export const Update = async (req, res) => {
 
     try {
         const hashedData = await User.findOne({ email });
-        console.log(hashedData);
+        console.log("hashed data", hashedData);
     } catch (error) {}
 };

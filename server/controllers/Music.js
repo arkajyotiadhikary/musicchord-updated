@@ -3,7 +3,7 @@ const fs = require("fs");
 
 const yt_audio = async (req, res) => {
     const { songId } = req.params;
-    console.log(songId);
+    console.log("song id: ", songId);
     try {
         res.writeHead(200, {
             "Content-Type": "audio/mpeg",
@@ -15,14 +15,8 @@ const yt_audio = async (req, res) => {
         ytdl(audioDetail.videoDetails.video_url, {
             filter: "audioonly",
         }).pipe(res);
-
-        console.log(
-            ytdl(audioDetail.videoDetails.video_url, {
-                filter: "audioonly",
-            })
-        );
     } catch (error) {
-        console.log(error);
+        console.error("error playing the song", error);
     }
 };
 

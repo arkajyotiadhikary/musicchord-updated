@@ -31,7 +31,7 @@ const signIn = async (req, res) => {
             username: hashedData.username,
         });
     } catch (error) {
-        if (error) console.log(error);
+        if (error) console.error("Error signin in", error);
         res.status(500).json({ msg: "Error signing in!!!" });
     }
 };
@@ -52,7 +52,7 @@ const signUp = async (req, res) => {
 
         res.status(200).json({ msg: "User signed up successfully" });
     } catch (error) {
-        if (error) console.log(error);
+        if (error) console.error("Error sigin up", error);
         res.status(500).json({ msg: "Error signing up!!!" });
     }
 };
@@ -76,7 +76,7 @@ const loadUser = async (req, res) => {
         });
     } catch (error) {
         const err = error.response;
-        console.log(err);
+        if (err) console.error("Error loading the user", err);
         res.status(500).json({ msg: "Error loading user!!!" });
     }
 };

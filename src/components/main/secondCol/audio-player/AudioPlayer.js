@@ -13,7 +13,6 @@ const AudioPlayer = () => {
         } else {
             audioRef.current.pause();
         }
-        console.log(audioRef.current);
     }, [isPlaying]);
 
     const handlePlay = () => {
