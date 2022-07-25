@@ -9,11 +9,11 @@ import { loadUser } from "../apis/auth";
 
 const AppRouter = () => {
     const history = useHistory();
-    if (localStorage.getItem("token")) {
-        loadUser();
-    } else {
-        history.push("./signin");
-    }
+    // if (localStorage.getItem("token")) {
+    //     loadUser();
+    // } else {
+    //     history.push("/signin");
+    // }
     return (
         <Switch>
             <Route path="/signin" component={Signin} />
