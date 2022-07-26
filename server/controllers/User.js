@@ -1,4 +1,4 @@
-const User = require("../models/SignUpModel");
+const User = require("../models/User");
 
 export const Update = async (req, res) => {
     const { email, username, about, old_password, password } = req.body;

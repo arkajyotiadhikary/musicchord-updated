@@ -4,11 +4,12 @@ const http = require("http");
 const dotenv = require("dotenv");
 const mongoose = require("mongoose");
 const cors = require("cors");
+const cookieParser = require("cookie-parser");
 const path = require("path");
 
 // Import routes
-const authRoutes = require("./router/Auth");
-const musicRoutes = require("./router/Music");
+const authRoutes = require("./router/auth");
+const musicRoutes = require("./router/music");
 
 // initialization
 dotenv.config();
@@ -66,7 +67,8 @@ const updatedUserList = () => {
 // middlewares
 app.use(cors());
 app.use(express.json());
-app.use("/auth", authRoutes);
+app.use(cookieParser());
+app.use("/", authRoutes);
 app.use("/music", musicRoutes);
 
 const buildPath = path.join(__dirname, "..", "build");

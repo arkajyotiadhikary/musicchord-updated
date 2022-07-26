@@ -19,6 +19,7 @@
         "@dropb/ffprobe": "^2.0.0",
         "axios": "^0.21.1",
         "bcrypt": "^5.0.1",
+        "cookie-parser": "^1.4.6",
         "cors": "^2.8.5",
         "dotenv": "^10.0.0",
         "eslint": "^7.32.0",
