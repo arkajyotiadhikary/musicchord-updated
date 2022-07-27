@@ -1,7 +1,7 @@
 {
     "name": "server",
     "version": "1.0.0",
-    "description": "",
+    "description": "this the backend for musicchord",
     "main": "server.js",
     "engines": {
         "node": "14.17.1",
@@ -14,7 +14,7 @@
         "server": "nodemon server.js",
         "client": "npm start --prefix client"
     },
-    "author": "",
+    "author": "arka jyoti adhikary",
     "license": "ISC",
     "dependencies": {
         "@dropb/ffprobe": "^2.0.0",
