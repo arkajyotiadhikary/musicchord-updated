@@ -71,8 +71,13 @@ app.use(cookieParser());
 app.use("/", authRoutes);
 app.use("/music", musicRoutes);
 
-const buildPath = path.join(__dirname, "..", "build");
-app.use(express.static(buildPath));
+if (process.env.NODE_ENV === "production") {
+    app.use(express.static(".client/build/"));
+    app.get("*", (req, res) => {
+        res.sendFile(path.resolve(__dirname, "cleint", "build", "index.html"));
+    });
+}
+
 const port = process.env.PORT || 8000;
 
 server.listen(port, () => console.log(`server is running at ${port}`));
