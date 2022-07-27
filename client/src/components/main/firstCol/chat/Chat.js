@@ -5,12 +5,24 @@ import InputPanel from "./InputPanel";
 import UserJoinMessage from "./UserJoinMessage";
 import User from "./User";
 import "./Chat.css";
-import SocketClient from "../../../socket/SocketClient";
 import { loadUser } from "../../../../apis/auth";
+import store from "../../../../store";
+import { useSelector } from "react-redux";
+import { io } from "socket.io-client";
+const ENDPOINT = "localhost:8000";
 // ---
-
+const state = store.getState();
+const username = state.user.username;
+const SocketClient = io(ENDPOINT + `?userName=${username}`, {
+    transports: ["websocket"],
+    withCredentials: true,
+    extraHeaders: {
+        "my-custom-header": "abcd",
+    },
+});
 const Chat = () => {
     //States
+
     const [messages, setMessages] = useState([]);
     const [userList, setUserList] = useState([]);
 
@@ -35,7 +47,8 @@ const Chat = () => {
             getUserDetails();
             handleUserActivity("New user has joined");
         });
-    }, [userDetails, userList]);
+        console.log("User List", userList);
+    }, [userList]);
 
     useEffect(() => {
         SocketClient.on("disconnection", (data) => {
@@ -43,6 +56,7 @@ const Chat = () => {
             console.log("user-left list", userList);
             handleUserActivity("User left");
         });
+        console.log("User List", userList);
     }, [userList]);
 
     useEffect(() => {
@@ -85,7 +99,7 @@ const Chat = () => {
         const messageData = message_data(
             "selfMessage",
             message,
-            localStorage.getItem("username"),
+            username,
             "",
             time
         );

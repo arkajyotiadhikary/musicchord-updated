@@ -1,6 +1,6 @@
 const { v4: uuidv4 } = require("uuid");
 const jwt = require("jsonwebtoken");
-const User = require("../models/SignUpModel");
+const User = require("../models/User");
 const { encrypt, decrypt } = require("../utils/encrypt");
 
 // Sign In route
@@ -12,7 +12,6 @@ const signIn = async (req, res) => {
 
     try {
         const hashedData = await User.findOne({ email });
-
         const decryptedPassword = await decrypt(password, hashedData.password);
 
         if (!decryptedPassword) {
@@ -21,16 +20,26 @@ const signIn = async (req, res) => {
             });
         }
 
-        const token = jwt.sign({ email }, process.env.JWT_TOKEN_KEY, {
-            expiresIn: "2h",
-        });
+        const token = jwt.sign(
+            { user_id: hashedData._id, email: hashedData.email },
+            process.env.JWT_TOKEN_KEY,
+            {
+                expiresIn: "2h",
+            }
+        );
 
+        hashedData.token = token;
+        res.cookie("jwtoken", token, {
+            expires: new Date(Date.now() + 2589200000),
+            httpOnly: true,
+        });
         res.status(200).json({
             msg: "User signed in successfully",
             token,
             username: hashedData.username,
         });
     } catch (error) {
+        if (error) console.error("Error signin in", error);
         res.status(500).json({ msg: "Error signing in!!!" });
     }
 };
@@ -41,17 +50,29 @@ const signIn = async (req, res) => {
 
 const signUp = async (req, res) => {
     try {
-        const hashedPassword = await encrypt(req.body.password);
+        const { username, password, email } = req.body;
 
-        await User.create({
-            username: req.body.username,
+        if (!(username && password))
+            res.status(401).send("can not pass empty values");
+
+        const hashedPassword = await encrypt(password);
+        const user = await User.create({
+            username: username,
             password: hashedPassword,
-            email: req.body.email.toLowerCase(),
+            email: email.toLowerCase(),
         });
-
         res.status(200).json({ msg: "User signed up successfully" });
+        const token = jwt.sign(
+            { user_id: user._id, email },
+            process.env.JWT_TOKEN_KEY,
+            {
+                expiresIn: "7h",
+            }
+        );
+        user.token = token;
+        user.save();
     } catch (error) {
-        console.log(error);
+        if (error) console.error("Error sigin up", error);
         res.status(500).json({ msg: "Error signing up!!!" });
     }
 };
@@ -75,7 +96,7 @@ const loadUser = async (req, res) => {
         });
     } catch (error) {
         const err = error.response;
-        console.log(err);
+        if (err) console.error("Error loading the user", err);
         res.status(500).json({ msg: "Error loading user!!!" });
     }
 };

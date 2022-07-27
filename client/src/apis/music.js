@@ -21,7 +21,6 @@ const search_song = async (songName = "study music") => {
         songDetail.title = yt_details.data.items[0].snippet.title;
         songDetail.artist = yt_details.data.items[0].snippet.channelTitle;
         await axios.get(`${endpoint}/music/${songId}`);
-        console.log(songDetail);
         return songDetail;
     } catch (error) {}
 };

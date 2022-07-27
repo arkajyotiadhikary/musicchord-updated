@@ -3,7 +3,6 @@ const Throttle = require("throttle");
 const { ffprobeSync } = require("@dropb/ffprobe");
 
 const Radio = (req, res) => {
-    console.log(req.body);
     // res.write("playing audio");
     // const bitRate = ffprobeSync("../music/song1.mp4").format.bit_rate;
     // const readable = fs.createReadStream("../music/song1.mp4");

@@ -1,7 +1,7 @@
 {
     "name": "server",
     "version": "1.0.0",
-    "description": "",
+    "description": "this the backend for musicchord",
     "main": "server.js",
     "engines": {
         "node": "14.17.1",
@@ -9,18 +9,18 @@
     },
     "scripts": {
         "client-install": "npm install --prefix client",
+        "heroku-postbuild": "cd client && npm install && npm run build",
         "start": "node server.js",
         "server": "nodemon server.js",
-        "client": "npm start --prefix client",
-        "heroku-postbuild": "cd client && npm install && npm run build",
-        "dev": "concurrently \"npm run server\" \"npm run client\" "
+        "client": "npm start --prefix client"
     },
-    "author": "",
+    "author": "arka jyoti adhikary",
     "license": "ISC",
     "dependencies": {
         "@dropb/ffprobe": "^2.0.0",
         "axios": "^0.21.1",
         "bcrypt": "^5.0.1",
+        "cookie-parser": "^1.4.6",
         "cors": "^2.8.5",
         "dotenv": "^10.0.0",
         "eslint": "^7.32.0",

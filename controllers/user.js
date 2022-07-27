@@ -1,4 +1,4 @@
-const User = require("../models/SignUpModel");
+const User = require("../models/User");
 
 export const Update = async (req, res) => {
     const { email, username, about, old_password, password } = req.body;
@@ -12,6 +12,6 @@ export const Update = async (req, res) => {
 
     try {
         const hashedData = await User.findOne({ email });
-        console.log(hashedData);
+        console.log("hashed data", hashedData);
     } catch (error) {}
 };

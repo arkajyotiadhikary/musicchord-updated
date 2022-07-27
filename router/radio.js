@@ -1,5 +1,5 @@
 const router = require("express").Router();
-const { Radio } = require("../controllers/Radio");
+const { Radio } = require("../controllers/radio");
 
 router.route("/").get(Radio);
 

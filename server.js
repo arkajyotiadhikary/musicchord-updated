@@ -4,20 +4,28 @@ const http = require("http");
 const dotenv = require("dotenv");
 const mongoose = require("mongoose");
 const cors = require("cors");
+const cookieParser = require("cookie-parser");
 const path = require("path");
 
 // Import routes
-const authRoutes = require("./router/Auth");
-const musicRoutes = require("./router/Music");
+const authRoutes = require("./router/auth");
+const musicRoutes = require("./router/music");
 
 // initialization
 dotenv.config();
-mongoose.connect(process.env.DATABASE_URI, () => {
-    console.log("Database conencted");
-});
+mongoose.connect(
+    process.env.DATABASE_URI,
+    { useNewUrlParser: true, useUnifiedTopology: true },
+    () => {
+        console.log("Database conencted");
+    }
+);
 
 const app = express();
 const server = http.createServer(app);
+
+// ------------------------------------------ socket -----------------------------------------------------
+// Socket io connection
 const io = socketIO(server, {
     cors: {
         origin: "localhost:3000",
@@ -26,25 +34,6 @@ const io = socketIO(server, {
         credentials: true,
     },
 });
-
-// Socket io connection
-const nsp = io.of("http://localhost:3000/main");
-const userSocketIdMap = new Map();
-
-const addClientToMap = (socket) => {
-    let userName = socket.handshake.query.userName;
-    if (!userSocketIdMap.has(socket.id)) {
-        userSocketIdMap.set(socket.id, userName);
-    }
-};
-const removeClientFromMap = (socketID) => {
-    if (userSocketIdMap.has(socketID)) userSocketIdMap.delete(socketID);
-};
-
-const updatedUserList = () => {
-    return [...userSocketIdMap.values()];
-};
-
 io.on("connection", (socket) => {
     addClientToMap(socket);
     io.emit("connection", updatedUserList());
@@ -60,20 +49,32 @@ io.on("connection", (socket) => {
         io.emit("disconnection", updatedUserList());
     });
 });
+// socket io user list000
+const userSocketIdMap = new Map();
+const addClientToMap = (socket) => {
+    let userName = socket.handshake.query.userName;
+    if (!userSocketIdMap.has(socket.id)) {
+        userSocketIdMap.set(socket.id, userName);
+    }
+};
+const removeClientFromMap = (socketID) => {
+    if (userSocketIdMap.has(socketID)) userSocketIdMap.delete(socketID);
+};
+const updatedUserList = () => {
+    return [...userSocketIdMap.values()];
+};
 
 // middlewares
 app.use(cors());
 app.use(express.json());
-app.use("/auth", authRoutes);
+app.use(cookieParser());
+app.use("/", authRoutes);
 app.use("/music", musicRoutes);
 
-// NOTE heroku deploy
 if (process.env.NODE_ENV === "production") {
-    // Set static folder
-    app.use(express.static("client/build"));
-
+    app.use(express.static(".client/build/"));
     app.get("*", (req, res) => {
-        res.sendFile(path.resolve(__dirname, "client", "build", "index.html"));
+        res.sendFile(path.resolve(__dirname, "cleint", "build", "index.html"));
     });
 }
 

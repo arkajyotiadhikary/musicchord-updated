@@ -20,7 +20,7 @@ const signUp = async (formData, history) => {
     };
 
     try {
-        await axios.post(`${endpoint}/auth/signup`, formData, config);
+        await axios.post(`${endpoint}/signup`, formData, config);
         history.push("/signin");
     } catch (error) {
         console.log("Error", error.response);
@@ -40,20 +40,16 @@ const signIn = async (formData, history) => {
 
     try {
         if (process.env.NODE_ENV === "production") {
-            signInDetails = await axios.post(`/auth/signin`, formData, config);
+            signInDetails = await axios.post(`/signin`, formData, config);
         } else {
             signInDetails = await axios.post(
-                `${endpoint}/auth/signin`,
+                `${endpoint}/signin`,
                 formData,
                 config
             );
         }
-
-        console.log("Sign In Details", signInDetails);
-        store.dispatch(user(signInDetails.data));
+        console.log("sign in details", signInDetails);
         localStorage.setItem("token", signInDetails.data.token);
-        localStorage.setItem("username", signInDetails.data.username);
-
         history.push("/main");
     } catch (error) {
         const err = error.response;
@@ -77,11 +73,7 @@ const loadUser = async () => {
     };
 
     try {
-        signInDetails = await axios.post(
-            `${endpoint}/auth/loaduser`,
-            body,
-            config
-        );
+        signInDetails = await axios.post(`${endpoint}/loaduser`, body, config);
         console.log("Load User Details", signInDetails);
         store.dispatch(user(signInDetails.data));
         return signInDetails;
