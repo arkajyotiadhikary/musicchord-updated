@@ -1,16 +1,15 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlusSquare } from "@fortawesome/free-solid-svg-icons";
 
 const EditProfile = () => {
-    const [userData, setUserData] = useState({
-        username: "",
-        about: "",
-        old_password: "",
-        password: "",
-    });
+    // const [userData, setUserData] = useState({
+    //     username: "",
+    //     about: "",
+    //     old_password: "",
+    //     password: "",
+    // });
 
-    const handleSubmit = () => {};
     return (
         <div
             id="edit-profile"

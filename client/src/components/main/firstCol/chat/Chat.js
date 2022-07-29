@@ -7,7 +7,6 @@ import User from "./User";
 import "./Chat.css";
 import { loadUser } from "../../../../apis/auth";
 import store from "../../../../store";
-import { useSelector } from "react-redux";
 import { io } from "socket.io-client";
 const ENDPOINT = "localhost:8000";
 // ---
@@ -48,7 +47,7 @@ const Chat = () => {
             handleUserActivity("New user has joined");
         });
         console.log("User List", userList);
-    }, [userList]);
+    }, [userList, userDetails]);
 
     useEffect(() => {
         SocketClient.on("disconnection", (data) => {

@@ -2,7 +2,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrash } from "@fortawesome/free-solid-svg-icons";
 const ListElement = (props) => {
     const {
-        details: { task_title, pomodoro_amt, pomodoro_outof, task_note },
+        details: { task_title, pomodoro_amt, pomodoro_outof },
         deleteItems,
         index,
     } = props;

@@ -12,8 +12,6 @@ const ProfileCard = () => {
         history.push("/signin");
     };
 
-    const handleEdit = (e) => {};
-
     return (
         <div className="profile-menu-content">
             <div className=" card profile-card bg-transparent ">
@@ -33,7 +31,6 @@ const ProfileCard = () => {
                     <button
                         className="btn btn-sm btn-outline-primary text-end"
                         type="button"
-                        className="btn btn-sm btn-primary"
                         data-bs-toggle="modal"
                         data-bs-target="#edit-profile"
                     >
