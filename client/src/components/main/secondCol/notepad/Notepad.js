@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrash } from "@fortawesome/free-solid-svg-icons";
 
+import "./Notepad.scss"
+
 const Notepad = () => {
     const [notesText, setNotesText] = useState("");
     const [notesList, setNotesList] = useState([]);
@@ -50,7 +52,6 @@ const Notepad = () => {
             <p>Notes</p>
             <div
                 className="display-notes mt-2 overflow-auto border"
-                style={{ height: "12rem" }}
             >
                 {notesList.length > 0
                     ? notesList.map((item, index) => (
