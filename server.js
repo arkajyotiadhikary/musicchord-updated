@@ -23,6 +23,7 @@ mongoose.connect(
 
 const app = express();
 const server = http.createServer(app);
+const onlineUsers = {};
 
 // ------------------------------------------ socket -----------------------------------------------------
 // Socket io connection
@@ -34,9 +35,19 @@ const io = socketIO(server, {
         credentials: true,
     },
 });
+
 io.on("connection", (socket) => {
-    addClientToMap(socket);
-    io.emit("connection", updatedUserList());
+    // adding new online user
+    onlineUsers[socket.id] = {
+        userID: socket.id,
+        username: socket.handshake.query.username,
+    };
+
+    // store the conencted user to online user map
+    io.emit("userConnected", Object.values(onlineUsers));
+    console.log("online users: ", Object.values(onlineUsers));
+
+    // io.emit("connection", updatedUserList());
     socket.on("message", (data) => {
         socket.broadcast.emit(
             "client-message",
@@ -45,23 +56,26 @@ io.on("connection", (socket) => {
         );
     });
     socket.on("disconnect", () => {
-        removeClientFromMap(socket.id);
-        io.emit("disconnection", updatedUserList());
+        // remove users as they left the server
+        delete onlineUsers[socket.id];
+        io.emit("userConnected", Object.values(onlineUsers));
+        // io.emit("disconnection", updatedUserList());
     });
 });
 // socket io user list000
-const userSocketIdMap = new Map();
-const addClientToMap = (socket) => {
-    let userName = socket.handshake.query.userName;
-    if (!userSocketIdMap.has(socket.id)) {
-        userSocketIdMap.set(socket.id, userName);
-    }
-};
+// const addClientToMap = (socket) => {
+//     let userName = socket.handshake.query.userName;
+//     console.log(socket.handshake.query);
+//     if (!onlineUsers.has(socket.id)) {
+//         onlineUsers.set(socket.id, userName);
+//     }
+// };
 const removeClientFromMap = (socketID) => {
-    if (userSocketIdMap.has(socketID)) userSocketIdMap.delete(socketID);
+    if (onlineUsers.has(socketID)) onlineUsers.delete(socketID);
 };
 const updatedUserList = () => {
-    return [...userSocketIdMap.values()];
+    console.log([...onlineUsers.values()]);
+    return [...onlineUsers.values()];
 };
 
 // middlewares

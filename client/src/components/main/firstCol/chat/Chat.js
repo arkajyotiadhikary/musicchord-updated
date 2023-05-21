@@ -8,17 +8,14 @@ import "./Chat.css";
 import { loadUser } from "../../../../apis/auth";
 import store from "../../../../store";
 import { io } from "socket.io-client";
+import { prototype } from "throttle";
 const ENDPOINT = "localhost:8000";
 // ---
 const state = store.getState();
 const username = state.user.username;
-const SocketClient = io(ENDPOINT + `?userName=${username}`, {
-    transports: ["websocket"],
-    withCredentials: true,
-    extraHeaders: {
-        "my-custom-header": "abcd",
-    },
-});
+
+let SocketClient;
+
 const Chat = () => {
     //States
 
@@ -40,25 +37,42 @@ const Chat = () => {
                 });
             }
         };
+
+        SocketClient = io(
+            ENDPOINT,
+            {
+                transports: ["websocket"],
+                withCredentials: true,
+                extraHeaders: {
+                    "my-custom-header": "abcd",
+                },
+            },
+            {
+                query: {
+                    username: state.user.username,
+                },
+            }
+        );
+
+        console.log("Username", username);
+
+        SocketClient.emit("connection");
+
+        // User Connection Handler
         SocketClient.on("connection", (data) => {
-            setUserList([...data]);
+            setUserList((prevUsers) => [...prevUsers, data]);
             console.log("user-join list", userList);
             getUserDetails();
             handleUserActivity("New user has joined");
         });
-        console.log("User List", userList);
-    }, [userList, userDetails]);
-
-    useEffect(() => {
         SocketClient.on("disconnection", (data) => {
-            setUserList([...data]);
-            console.log("user-left list", userList);
+            setUserList((prevUsers) =>
+                prevUsers.filter((user) => user.id !== data)
+            );
             handleUserActivity("User left");
         });
-        console.log("User List", userList);
-    }, [userList]);
 
-    useEffect(() => {
+        // Message Handler
         const handleClientMessage = (data, username) => {
             const messageData = message_data(
                 "clientMessage",
@@ -75,8 +89,18 @@ const Chat = () => {
             handleClientMessage(data, username);
             console.log("Client message recived");
         });
+        console.log("User List", userList);
     }, []);
-    //Handlers
+
+    useEffect(() => {
+        SocketClient.on("userConnected", (onlineUsers) => {
+            setUserList(onlineUsers);
+        });
+
+        return () => {
+            SocketClient.off("userConnected");
+        };
+    }, []);
 
     const handleUserActivity = (message) => {
         const messageData = message_data(
@@ -117,7 +141,7 @@ const Chat = () => {
     return (
         <div className="row">
             <div className="col-xs-12 col-sm-3">
-                <div className="d-flex flex-column justify-content-between h-100 bg-light shadow">
+                <div className="d-flex flex-column justify-content-start h-100 bg-light shadow">
                     <h6 className="text-center p-2">Online</h6>
                     <div className="card border-0 online-users bg-light">
                         <div className="card-body p-4">

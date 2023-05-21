@@ -1,6 +1,7 @@
 import React from "react";
 
-const User = ({ user }) => {
+const User = (user) => {
+    console.log("user", user);
     return (
         <div className="user mb-4">
             <div className="avatar mx-auto">
@@ -11,7 +12,7 @@ const User = ({ user }) => {
                 />
             </div>
             <div className="status off"></div>
-            <div className="name"> {user} </div>
+            <div className="name"> {user.username} </div>
         </div>
     );
 };

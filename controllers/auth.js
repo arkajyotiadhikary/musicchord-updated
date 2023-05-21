@@ -11,24 +11,31 @@ const signIn = async (req, res) => {
     const { email, password } = req.body;
 
     try {
-        const hashedData = await User.findOne({ email });
-        const decryptedPassword = await decrypt(password, hashedData.password);
-
-        if (!decryptedPassword) {
-            res.status(400).json({
-                msg: "Either email or password is wrong, please check and type it correctly",
-            });
-        }
-
-        const token = jwt.sign(
-            { user_id: hashedData._id, email: hashedData.email },
-            process.env.JWT_TOKEN_KEY,
-            {
-                expiresIn: "2h",
-            }
+        console.log(
+            "signed in request data- \nEmail::",
+            email,
+            "\nPassword::",
+            password
         );
 
-        hashedData.token = token;
+        const hashedData = await User.findOne({ email });
+        if (!hashedData) {
+            res.status(400).json({
+                msg: "No user found",
+            });
+            return;
+        }
+
+        const decryptedPassword = await decrypt(password, hashedData.password);
+        if (!decryptedPassword) {
+            res.status(400).json({
+                msg: "Password is incorrect",
+            });
+            return;
+        }
+
+        const token = hashedData.token;
+
         res.cookie("jwtoken", token, {
             expires: new Date(Date.now() + 2589200000),
             httpOnly: true,

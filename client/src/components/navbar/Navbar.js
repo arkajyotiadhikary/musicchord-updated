@@ -32,7 +32,10 @@ const Navbar = () => {
                     id="navbarSupportedContent"
                 >
                     <ul className="navbar-nav ms-auto mb-2 mb-lg-0">
-                        <li className="nav-item dropdown  bg-secondary rounded-circle px-1">
+                        <li
+                            className="nav-item dropdown  bg-secondary rounded-circle px-1"
+                            key=""
+                        >
                             <a
                                 className="nav-link"
                                 href="google.com"
