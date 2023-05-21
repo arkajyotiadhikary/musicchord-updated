@@ -58,9 +58,19 @@ const signIn = async (req, res) => {
 const signUp = async (req, res) => {
     try {
         const { username, password, email } = req.body;
-
-        if (!(username && password))
+        if (!(username && password)) {
             res.status(401).send("can not pass empty values");
+            return;
+        }
+
+        // NOTE checking email address already available
+        const availableUser = await User.findOne({ email });
+        if (availableUser) {
+            res.status(401).send(
+                "There is already a user available with the same email address!!"
+            );
+            return;
+        }
 
         const hashedPassword = await encrypt(password);
         const user = await User.create({
