@@ -2,8 +2,10 @@ import React, { useState, useEffect } from "react";
 import { useHistory } from "react-router-dom";
 import { loadUser } from "../../apis/auth";
 import { signIn } from "../../apis/auth";
+import "./Registration.css";
 
 const Signin = () => {
+    const [res, setRes] = useState(null);
     const history = useHistory();
     const [formData, setFormData] = useState({
         email: "",
@@ -29,10 +31,11 @@ const Signin = () => {
         });
     };
 
-    const onSubmit = (e) => {
+    const onSubmit = async (e) => {
         e.preventDefault();
 
-        signIn(formData, history);
+        const r = await signIn(formData, history);
+        setRes(r);
 
         setFormData({
             ...formData,
@@ -53,6 +56,12 @@ const Signin = () => {
                             <h5 className="card-title text-center mb-5 fw-light fs-5">
                                 Sign In
                             </h5>
+                            {res !== null ? (
+                                <div className="error-message">{res}</div>
+                            ) : (
+                                ""
+                            )}
+
                             <form onSubmit={onSubmit}>
                                 <div className="form-floating mb-3">
                                     <input

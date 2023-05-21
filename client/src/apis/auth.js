@@ -56,6 +56,7 @@ const signIn = async (formData, history) => {
             console.log("Error Message", err.data.msg);
         }
         console.log("Error", err);
+        return err.data.msg;
     }
 };
 
@@ -80,7 +81,7 @@ const loadUser = async () => {
         console.log("Error", error.response);
         const err = error.response;
         if (err.status === 400) {
-            console.log("Error Message", err.data.msg);
+            console.log(err.data.msg);
         }
         console.log("Error", error);
         return false;

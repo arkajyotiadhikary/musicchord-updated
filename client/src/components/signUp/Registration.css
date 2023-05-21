@@ -1,7 +1,17 @@
 .card-img-left {
-  width: 45%;
-  /* Link to your background image using in the property below! */
-  background: scroll center url("https://media.giphy.com/media/H62NM1ab7wzMXURdoi/giphy.gif");
-  background-size: cover;
+    width: 45%;
+    /* Link to your background image using in the property below! */
+    background: scroll center
+        url("https://media.giphy.com/media/H62NM1ab7wzMXURdoi/giphy.gif");
+    background-size: cover;
 }
 /*# sourceMappingURL=Registration.css.map */
+
+.error-message {
+    color: #f25260;
+    padding: 1rem;
+    border-radius: 4px;
+    margin-bottom: 2rem;
+    height: 4rem;
+    border: solid #f25260 2px;
+}
