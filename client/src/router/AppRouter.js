@@ -7,6 +7,7 @@ import Signin from "../components/signUp/Signin";
 import LandingPage from "../components/landing-page/LandingPage";
 import PublicRoute from "./PublicRoute";
 import PrivateRoute from "./PrivateRoute";
+import AudioViz from "../components/AudioViz";
 
 const AppRouter = () => {
     return (
@@ -19,6 +20,7 @@ const AppRouter = () => {
             />
             <PublicRoute restricted={true} component={Signin} path="/signin" />
             <PublicRoute restricted={true} component={Signup} path="/signup" />
+            <PublicRoute component={AudioViz} path="/viz" />
 
             <PrivateRoute component={Main} path="/main" exact />
         </Switch>
