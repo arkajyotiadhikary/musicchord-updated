@@ -49,6 +49,7 @@ const signIn = async (formData, history) => {
         }
         console.log("sign in details", signInDetails);
         localStorage.setItem("token", signInDetails.data.token);
+        store.dispatch(user(signInDetails.data));
         history.push("/main");
     } catch (error) {
         const err = error.response;

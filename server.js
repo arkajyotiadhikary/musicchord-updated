@@ -40,13 +40,17 @@ io.on("connection", (socket) => {
     // adding new online user
     onlineUsers[socket.id] = {
         userID: socket.id,
-        username: socket.handshake.query.username,
+        username: "",
     };
 
     // store the conencted user to online user map
-    io.emit("userConnected", Object.values(onlineUsers));
-    console.log("online users: ", Object.values(onlineUsers));
 
+    socket.on("username", (username) => {
+        onlineUsers[socket.id]["username"] = username;
+        console.log("Connected with username:", username);
+        io.emit("userConnected", Object.values(onlineUsers));
+        console.log("online users: ", Object.values(onlineUsers));
+    });
     // io.emit("connection", updatedUserList());
     socket.on("message", (data) => {
         socket.broadcast.emit(

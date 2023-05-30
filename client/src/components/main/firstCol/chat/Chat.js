@@ -11,8 +11,7 @@ import { io } from "socket.io-client";
 import { prototype } from "throttle";
 const ENDPOINT = "localhost:8000";
 // ---
-const state = store.getState();
-const username = state.user.username;
+let username;
 
 let SocketClient;
 
@@ -38,26 +37,16 @@ const Chat = () => {
             }
         };
 
-        SocketClient = io(
-            ENDPOINT,
-            {
-                transports: ["websocket"],
-                withCredentials: true,
-                extraHeaders: {
-                    "my-custom-header": "abcd",
-                },
+        SocketClient = io(ENDPOINT, {
+            transports: ["websocket"],
+            withCredentials: true,
+            extraHeaders: {
+                "my-custom-header": "abcd",
             },
-            {
-                query: {
-                    username: state.user.username,
-                },
-            }
-        );
-
+        });
+        username = store.getState().user.username;
         console.log("Username", username);
-
-        SocketClient.emit("connection");
-
+        SocketClient.emit("username", username);
         // User Connection Handler
         SocketClient.on("connection", (data) => {
             setUserList((prevUsers) => [...prevUsers, data]);
