@@ -16,6 +16,8 @@ const JoinRoom = () => {
         password: "",
     });
 
+    const [rooms, setRooms] = useState([]);
+
     const handleChange = (e) => {
         setData({
             ...data,
@@ -26,6 +28,22 @@ const JoinRoom = () => {
         e.preventDefault();
         socketClient.emit("create-room", data);
     };
+
+    useEffect(() => {
+        socketClient.emit("rooms");
+    }, []);
+
+    socketClient.on("room-list", (__rooms) => {
+        console.log(__rooms);
+        console.log("Room List", rooms);
+        const _rooms = Object.keys(__rooms);
+        if (_rooms !== []) setRooms([..._rooms]);
+    });
+    socketClient.on("roomCreated", (__rooms) => {
+        console.log("Room Created", rooms);
+        const _rooms = Object.keys(__rooms);
+        if (_rooms !== []) setRooms([..._rooms]);
+    });
 
     return (
         <div className="join-room">
@@ -42,7 +60,9 @@ const JoinRoom = () => {
                     <div className="list-rooms">
                         <p>Rooms</p>
                         <ul>
-                            <li>None</li>
+                            {rooms.map((i) => (
+                                <li>{i}</li>
+                            ))}
                         </ul>
                     </div>
                 </div>

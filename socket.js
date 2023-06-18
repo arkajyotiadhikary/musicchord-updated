@@ -2,6 +2,7 @@ const socketIO = require("socket.io");
 
 const intializeSocket = (server) => {
     const onlineUsers = {};
+    const rooms = {};
     const io = socketIO(server, {
         cors: {
             origin: "localhost:3000",
@@ -35,7 +36,21 @@ const intializeSocket = (server) => {
             );
         });
         socket.on("create-room", ({ roomName, password }) => {
-            console.log("Room Name and Password !! ", roomName, password);
+            if (rooms[roomName]) {
+                socket.emit("room-error", { message: "Room already exist!" });
+                return;
+            }
+            rooms[roomName] = {
+                password: password,
+                sockets: [socket.id],
+            };
+
+            socket.join(roomName);
+            socket.emit("roomCreated", rooms);
+            console.log("Rooms", rooms);
+        });
+        socket.on("rooms", () => {
+            socket.emit("room-list", rooms);
         });
         socket.on("disconnect", () => {
             // remove users as they left the server
