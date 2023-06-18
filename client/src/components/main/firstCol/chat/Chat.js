@@ -8,8 +8,7 @@ import "./Chat.css";
 import { loadUser } from "../../../../apis/auth";
 import store from "../../../../store";
 import { io } from "socket.io-client";
-import { prototype } from "throttle";
-const ENDPOINT = "localhost:8000";
+import { ENDPOINT } from "../../../../utils/constants";
 // ---
 let username;
 
@@ -73,15 +72,10 @@ const Chat = () => {
             setMessages((messages) => [...messages, messageData]);
             handleScroll();
         };
-
         SocketClient.on("client-message", (data, username) => {
             handleClientMessage(data, username);
             console.log("Client message recived");
         });
-        console.log("User List", userList);
-    }, []);
-
-    useEffect(() => {
         SocketClient.on("userConnected", (onlineUsers) => {
             setUserList(onlineUsers);
         });
@@ -89,6 +83,7 @@ const Chat = () => {
         return () => {
             SocketClient.off("userConnected");
         };
+        console.log("User List", userList);
     }, []);
 
     const handleUserActivity = (message) => {

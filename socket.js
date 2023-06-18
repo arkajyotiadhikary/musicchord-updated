@@ -34,6 +34,9 @@ const intializeSocket = (server) => {
                 socket.handshake.query.userName
             );
         });
+        socket.on("create-room", ({ roomName, password }) => {
+            console.log("Room Name and Password !! ", roomName, password);
+        });
         socket.on("disconnect", () => {
             // remove users as they left the server
             delete onlineUsers[socket.id];
